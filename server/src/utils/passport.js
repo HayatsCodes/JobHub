@@ -1,4 +1,5 @@
 const LocalStrategy = require('passport-local').Strategy;
+const bcrypt = require('bcryptjs');
 
 // creating and exporting passport configuration function
 module.exports = (passport, User) => {
@@ -8,10 +9,9 @@ module.exports = (passport, User) => {
                 usernameField: 'email',
                 passwordField: 'password',
             },
-            (email, password, done) => {
+            async (email, password, done) => {
                 try {
-                    User.findOne({ email }, async (err, user) => {
-                        if (err) { return done(err); }
+                    const user = await User.findOne({ email });
                         if (!user) {
                             return done(null, false, { message: 'Incorrect email or password' });
                         }
@@ -20,7 +20,6 @@ module.exports = (passport, User) => {
                             return done(null, false, { message: 'Incorrect email or password' });
                         }
                         return done(null, user);
-                    });
                 } catch (err) {
                     return done(err);
                 }
