@@ -24,6 +24,9 @@
     "validator": "^13.9.0"
   },
   "devDependencies": {
+    "jest": "^29.5.0",
+    "mongodb-memory-server": "^8.12.2",
+    "supertest": "^6.3.3",
     "dotenv": "^16.0.3"
   }
 }
