@@ -154,7 +154,21 @@ describe('userModel test wrapper', () => {
                 role: 'user'
             };
             await expect(userModel.create(userData)).resolves.not.toThrow();
+
+            
         });
-    })
+
+        test('Should not create a user with invalid role', async () => {
+            const invalidRoleData = {
+                firstName: 'Kim',
+                lastName: 'Jong',
+                email: 'kimj@example.com',
+                password: 'password123',
+                role: 'users'
+            };
+
+            await expect(userModel.create(invalidRoleData)).rejects.toThrow();
+        });
+    });
 
 });
