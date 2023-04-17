@@ -171,4 +171,27 @@ describe('userModel test wrapper', () => {
         });
     });
 
+    describe('Reject user fields shorter than required', () => {
+        test('Should reject firstName or lastName field shorter than 2 characters', async () => {
+            const userData = {
+                firstName: 'J',
+                lastName: 'Doe',
+                email: 'jaydoe@example.com',
+                password: 'password123',
+                role: 'user'
+              };
+              await expect(userModel.create(userData)).rejects.toThrow();
+              
+              const userData2 = {
+                firstName: 'John',
+                lastName: 'D',
+                email: 'jhndee@example.com',
+                password: 'password123',
+                role: 'user'
+              };
+              await expect(userModel.create(userData2)).rejects.toThrow();
+        });
+
+    })
+
 });
