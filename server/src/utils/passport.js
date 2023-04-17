@@ -1,6 +1,5 @@
 const LocalStrategy = require('passport-local').Strategy;
 
-async function verifyUser()
 // creating and exporting passport configuration function
 module.exports = (passport, User) => {
     passport.use(
