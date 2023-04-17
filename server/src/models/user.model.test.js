@@ -112,7 +112,7 @@ describe('userModel test wrapper', () => {
             await expect(userModel.create(userData)).rejects.toThrow();
         });
 
-        test('Should not save an invalid email', async () => {
+        test('Should not create a user with an invalid email', async () => {
             const userData = {
                 firstName: 'Jane',
                 lastName: 'Doe',
@@ -125,5 +125,36 @@ describe('userModel test wrapper', () => {
         });
     });
 
-    
+    describe('Valid role field check', () => {
+
+        test('Should create a user with either admin, employer or user role', async () => {
+            const adminData = {
+                firstName: 'Jane',
+                lastName: 'Doe',
+                email: 'janedoe@example.com',
+                password: 'password123',
+                role: 'admin'
+            };
+            await expect(userModel.create(adminData)).resolves.not.toThrow();
+
+            const employerData = {
+                firstName: 'Jan',
+                lastName: 'Dee',
+                email: 'jandee@example.com',
+                password: 'password123',
+                role: 'employer'
+            };
+            await expect(userModel.create(employerData)).resolves.not.toThrow();
+
+            const userData = {
+                firstName: 'John',
+                lastName: 'Dee',
+                email: 'johndee@example.com',
+                password: 'password123',
+                role: 'user'
+            };
+            await expect(userModel.create(userData)).resolves.not.toThrow();
+        });
+    })
+
 });
