@@ -31,12 +31,14 @@ async function registerUser(req, res) {
         const user = new userModel(newUser);
         await user.save();
 
-        req.login({id: user._id, 'role': user.role});
+        req.login({id: user._id, role});
         res.redirect('/');
     } catch (err) {
         return res.status(400).json( err.stack );
     }
 }
+
+module.exports = registerUser;
 
 
 
