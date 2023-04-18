@@ -13,11 +13,11 @@ module.exports = (passport, User) => {
                 try {
                     const user = await User.findOne({ email });
                         if (!user) {
-                            return done(null, false, { message: 'Incorrect email or password' });
+                            return done(null, false, { error: 'Incorrect email or password' });
                         }
                         const isPasswordMatch = await bcrypt.compare(password, user.password);
                         if (!isPasswordMatch) {
-                            return done(null, false, { message: 'Incorrect email or password' });
+                            return done(null, false, { error: 'Incorrect email or password' });
                         }
                         return done(null, user);
                 } catch (err) {

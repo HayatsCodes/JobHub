@@ -69,12 +69,152 @@ describe('userRoute', () => {
             expect(res.body.error).toBe('User already exist with the given email');
             
         });
+
+        test('Should not register user with missing firstName', async () => {
+            const userData = {
+                lastName: "Pearl",
+                password: "password021",
+                email: "pearl@example.com",
+                role: 'admin'
+            }
+
+            const res = await request(app)
+            .post('/auth/signup')
+            .send(userData)
+            .expect('Content-Type', /json/)
+            .expect(400)
+
+            expect(res.body.error).toBe('Please enter all the details');
+        });
+        
+        test('Should not register user with missing lastName', async () => {
+            const userData = {
+                firstName: "Vanessa",
+                password: "password021",
+                email: "pearl@example.com",
+                role: 'admin'
+            }
+
+            const res = await request(app)
+            .post('/auth/signup')
+            .send(userData)
+            .expect('Content-Type', /json/)
+            .expect(400)
+
+            expect(res.body.error).toBe('Please enter all the details');
+        });
+        
+        test('Should not register user with missing password', async () => {
+            const userData = {
+                firstName: "Vanessa",
+                lastName: "Pearl",
+                email: "pearl@example.com",
+                role: 'admin'
+            }
+
+            const res = await request(app)
+            .post('/auth/signup')
+            .send(userData)
+            .expect('Content-Type', /json/)
+            .expect(400)
+
+            expect(res.body.error).toBe('Please enter all the details');
+        });
+        
+        test('Should not register user with missing email', async () => {
+            const userData = {
+                firstName: "Vanessa",
+                lastName: "Pearl",
+                password: "password021",
+                role: 'admin'
+            }
+
+            const res = await request(app)
+            .post('/auth/signup')
+            .send(userData)
+            .expect('Content-Type', /json/)
+            .expect(400)
+
+            expect(res.body.error).toBe('Please enter all the details');
+        });
+        
+        test('Should not register user with missing role', async () => {
+            const userData = {
+                firstName: "Vanessa",
+                lastName: "Pearl",
+                password: "password021",
+                email: "pearl@example.com",
+            }
+
+            const res = await request(app)
+            .post('/auth/signup')
+            .send(userData)
+            .expect('Content-Type', /json/)
+            .expect(400)
+
+            expect(res.body.error).toBe('Please enter all the details');
+        });
+
+        test('Should not register a user with an invalid email', async () => {
+            const userData = {
+                firstName: "Vanessa",
+                lastName: "Pearl",
+                password: "password021",
+                email: "queen.com",
+                role: 'admin'
+            }
+
+            const res = await request(app)
+            .post('/auth/signup')
+            .send(userData)
+            .expect('Content-Type', /json/)
+            .expect(400)
+
+            expect(res.body.error).toBe('Please enter a valid email');
+            
+        });
+
+        test('Should not register a user with an invalid role', async () => {
+            const userData = {
+                firstName: "Vanessa",
+                lastName: "Pearl",
+                password: "password021",
+                email: "vp@email.com",
+                role: 'superUser'
+            }
+
+            const res = await request(app)
+            .post('/auth/signup')
+            .send(userData)
+            .expect('Content-Type', /json/)
+            .expect(400)
+
+            expect(res.body.error).toBe('Please enter a valid role');
+        });
+
+        test('Should not register a user with password lesser than 8 characters', async () => {
+            const userData = {
+                firstName: "Vanessa",
+                lastName: "Pearl",
+                password: "pass",
+                email: "vp@email.com",
+                role: 'admin'
+            }
+
+            const res = await request(app)
+            .post('/auth/signup')
+            .send(userData)
+            .expect('Content-Type', /json/)
+            .expect(400)
+
+            expect(res.body.error).toBe('Password must be at least 8 characters long');
+        });
         
     });
 
     describe('POST auth/signin', () => {
 
-        test('Login a valid user succesfully', async () => {
+        test('Should Login a valid user succesfully', async () => {
             const userData = {
                 email: "queen@example.com",
                 password: "password021",
@@ -86,8 +226,40 @@ describe('userRoute', () => {
             .expect('Content-Type', /json/)
             .expect(200)
 
-            expect(res.body.message).toBe('User already exist with the given email');
+            expect(res.body.message).toBe('Signin successful');
 
         });
+
+        test('Should not login a user with invalid email', async () => {
+            const userData = {
+                email: "queer@example.com",
+                password: "password021",
+            }
+
+            const res = await request(app)
+            .post('/auth/signin')
+            .send(userData)
+            .expect('Content-Type', /json/)
+            .expect(401)
+
+            expect(res.body.error).toBe('Incorrect email or password');
+        });
+
+        test('Should not login a user with invalid password', async () => {
+            const userData = {
+                email: "queen@example.com",
+                password: "password123",
+            }
+
+            const res = await request(app)
+            .post('/auth/signin')
+            .send(userData)
+            .expect('Content-Type', /json/)
+            .expect(401)
+
+            expect(res.body.error).toBe('Incorrect email or password');
+        });
+
+
     });
 });

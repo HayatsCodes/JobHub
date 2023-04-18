@@ -9,6 +9,7 @@ userRouter.post('/signin', (req, res, next) => {
     passport.authenticate('local', (err, user, info) => {
       if (err) { return next(err); }
       if (!user) { 
+        // return the info that's returned by the LocalStrategy
         return res.status(401).json(info);
       }
       req.logIn(user, (err) => {
