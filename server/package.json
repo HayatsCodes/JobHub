@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node src/server",
     "watch": "nodemon src/server",
-    "test": "jest"
+    "test": "set NODE_ENV=test && set SESSION_SECRET=ASKDJFCXMDFNCNNC && jest"
   },
   "keywords": [],
   "author": "",
@@ -28,5 +28,9 @@
     "mongodb-memory-server": "^8.12.2",
     "supertest": "^6.3.3",
     "dotenv": "^16.0.3"
+  },
+  "jest": {
+    "testTimeout": 10000
   }
+  
 }

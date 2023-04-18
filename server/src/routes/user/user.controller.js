@@ -1,5 +1,5 @@
 const bcrypt = require('bcryptjs');
-const userModel = require('../models/user.model');
+const userModel = require('../../models/user.model');
 
 async function registerUser(req, res) {
     try {
@@ -32,7 +32,7 @@ async function registerUser(req, res) {
         await user.save();
 
         req.login({ id: user._id, role }, () => {
-            return res.status(200).json({ message: "Signin successful" });
+            return res.status(201).json({ message: "Registration sucessful" });
         });
     } catch (err) {
         return res.status(400).json(err.stack);
