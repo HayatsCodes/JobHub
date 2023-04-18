@@ -11,7 +11,7 @@ async function registerUser(req, res) {
 
         const UserExist = await userModel.findOne({ email });
         if (UserExist) {
-            return res.status(400).json({ error: 'User already exist with the given email' });
+            return res.status(409).json({ error: 'User already exist with the given email' });
         }
 
         if (password.length < 8) {

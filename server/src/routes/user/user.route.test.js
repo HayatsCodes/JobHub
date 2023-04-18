@@ -50,6 +50,44 @@ describe('userRoute', () => {
             expect(user.password).not.toBe(userData.password);
             expect(user.role).toBe(userData.role);
         });
+
+        test('Should not register a user with an existing email', async () => {
+            const userData = {
+                firstName: "Vanessa",
+                lastName: "Pearl",
+                password: "password021",
+                email: "queen@example.com",
+                role: 'admin'
+            }
+
+            const res = await request(app)
+            .post('/auth/signup')
+            .send(userData)
+            .expect('Content-Type', /json/)
+            .expect(409)
+
+            expect(res.body.error).toBe('User already exist with the given email');
+            
+        });
         
+    });
+
+    describe('POST auth/signin', () => {
+
+        test('Login a valid user succesfully', async () => {
+            const userData = {
+                email: "queen@example.com",
+                password: "password021",
+            }
+
+            const res = await request(app)
+            .post('/auth/signin')
+            .send(userData)
+            .expect('Content-Type', /json/)
+            .expect(200)
+
+            expect(res.body.message).toBe('User already exist with the given email');
+
+        });
     });
 });

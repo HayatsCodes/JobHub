@@ -23,7 +23,6 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(morgan('combined'));
 app.use('/auth', userRouter);
-console.log(process.env.NODE_ENV === 'test ');
 if (process.env.NODE_ENV === 'test ') {
   // Disconnect Redis client when running in test environment
   afterAll(async () => {

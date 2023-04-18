@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node src/server",
     "watch": "nodemon src/server",
-    "test": "set NODE_ENV=test && set SESSION_SECRET=ASKDJFCXMDFNCNNC && jest"
+    "test": "set NODE_ENV=test && set SESSION_SECRET=ASKDJFCXMDFNCNNC && jest --detectOpenHandles"
   },
   "keywords": [],
   "author": "",
