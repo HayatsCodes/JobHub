@@ -1,3 +1,4 @@
+const os = require('os');
 const express = require('express');
 const session = require('express-session');
 const morgan = require('morgan');
@@ -23,11 +24,27 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(morgan('combined'));
 app.use('/auth', userRouter);
-if (process.env.NODE_ENV === 'test ') {
-  // Disconnect Redis client when running in test environment
-  afterAll(async () => {
-    await redisClient.quit();
-  }, 10000);
+
+
+const isWindows = os.platform() === 'win32';
+
+
+if (isWindows) {
+  if (process.env.NODE_ENV === 'test ') {
+    // Disconnect Redis client when running in test environment
+    afterAll(async () => {
+      await redisClient.quit();
+    }, 10000);
+  }
+} else {
+  if (process.env.NODE_ENV === 'test') {
+    // Disconnect Redis client when running in test environment
+    afterAll(async () => {
+      await redisClient.quit();
+    }, 10000);
+  } 
 }
+
+
 
 module.exports = app;
