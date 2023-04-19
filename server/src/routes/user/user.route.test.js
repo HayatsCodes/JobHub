@@ -8,6 +8,7 @@ const userModel = require('../../models/user.model')
 describe('userRoute', () => {
 
     let mongo;
+    let agent;
 
     beforeAll(async () => {
         mongo = await MongoMemoryServer.create();
@@ -220,7 +221,8 @@ describe('userRoute', () => {
                 password: "password021",
             }
 
-            const res = await request(app)
+            agent = request.agent(app);
+            const res = await agent
             .post('/auth/signin')
             .send(userData)
             .expect('Content-Type', /json/)
@@ -261,5 +263,24 @@ describe('userRoute', () => {
         });
 
 
+    });
+
+    describe('POST auth/signout', () => {
+
+        test('Should sign out a user successfully', async () => {
+          
+            const userData = {
+              email: "queen@example.com",
+              password: "password021",
+            };
+          
+            const res = await agent
+              .post('/auth/signout')
+              .expect('Content-Type', /json/)
+              .expect(200);
+          
+            expect(res.body.message).toBe('Signout successful');
+          });
+          
     });
 });
