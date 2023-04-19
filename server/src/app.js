@@ -23,7 +23,7 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(morgan('combined'));
-app.use('/auth', userRouter);
+app.use('/api/auth', userRouter);
 
 
 const isWindows = os.platform() === 'win32';

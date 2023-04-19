@@ -36,7 +36,7 @@ describe('userRoute', () => {
             }
         
             const res = await request(app)
-                .post('/auth/signup')
+                .post('/api/auth/signup')
                 .send(userData)
                 .expect('Content-Type', /json/)
                 .expect(201);
@@ -62,7 +62,7 @@ describe('userRoute', () => {
             }
 
             const res = await request(app)
-            .post('/auth/signup')
+            .post('/api/auth/signup')
             .send(userData)
             .expect('Content-Type', /json/)
             .expect(409)
@@ -80,7 +80,7 @@ describe('userRoute', () => {
             }
 
             const res = await request(app)
-            .post('/auth/signup')
+            .post('/api/auth/signup')
             .send(userData)
             .expect('Content-Type', /json/)
             .expect(400)
@@ -97,7 +97,7 @@ describe('userRoute', () => {
             }
 
             const res = await request(app)
-            .post('/auth/signup')
+            .post('/api/auth/signup')
             .send(userData)
             .expect('Content-Type', /json/)
             .expect(400)
@@ -114,7 +114,7 @@ describe('userRoute', () => {
             }
 
             const res = await request(app)
-            .post('/auth/signup')
+            .post('/api/auth/signup')
             .send(userData)
             .expect('Content-Type', /json/)
             .expect(400)
@@ -131,7 +131,7 @@ describe('userRoute', () => {
             }
 
             const res = await request(app)
-            .post('/auth/signup')
+            .post('/api/auth/signup')
             .send(userData)
             .expect('Content-Type', /json/)
             .expect(400)
@@ -148,7 +148,7 @@ describe('userRoute', () => {
             }
 
             const res = await request(app)
-            .post('/auth/signup')
+            .post('/api/auth/signup')
             .send(userData)
             .expect('Content-Type', /json/)
             .expect(400)
@@ -166,7 +166,7 @@ describe('userRoute', () => {
             }
 
             const res = await request(app)
-            .post('/auth/signup')
+            .post('/api/auth/signup')
             .send(userData)
             .expect('Content-Type', /json/)
             .expect(400)
@@ -185,7 +185,7 @@ describe('userRoute', () => {
             }
 
             const res = await request(app)
-            .post('/auth/signup')
+            .post('/api/auth/signup')
             .send(userData)
             .expect('Content-Type', /json/)
             .expect(400)
@@ -203,7 +203,7 @@ describe('userRoute', () => {
             }
 
             const res = await request(app)
-            .post('/auth/signup')
+            .post('/api/auth/signup')
             .send(userData)
             .expect('Content-Type', /json/)
             .expect(400)
@@ -223,7 +223,7 @@ describe('userRoute', () => {
 
             agent = request.agent(app);
             const res = await agent
-            .post('/auth/signin')
+            .post('/api/auth/signin')
             .send(userData)
             .expect('Content-Type', /json/)
             .expect(200)
@@ -239,7 +239,7 @@ describe('userRoute', () => {
             }
 
             const res = await request(app)
-            .post('/auth/signin')
+            .post('/api/auth/signin')
             .send(userData)
             .expect('Content-Type', /json/)
             .expect(401)
@@ -254,7 +254,7 @@ describe('userRoute', () => {
             }
 
             const res = await request(app)
-            .post('/auth/signin')
+            .post('/api/auth/signin')
             .send(userData)
             .expect('Content-Type', /json/)
             .expect(401)
@@ -275,7 +275,7 @@ describe('userRoute', () => {
             };
           
             const res = await agent
-              .post('/auth/signout')
+              .post('/api/auth/signout')
               .expect('Content-Type', /json/)
               .expect(200);
           
@@ -290,7 +290,7 @@ describe('userRoute', () => {
             };
           
             const res = await agent
-              .post('/auth/signout')
+              .post('/api/auth/signout')
               .expect('Content-Type', /json/)
               .expect(400);
           
