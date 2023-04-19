@@ -4,17 +4,11 @@
   "description": "A Job Board Web Application that allows users to browse and apply to job listings.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/HayatsCodes/job-board.git"
+    "install-server": "npm install --prefix server",
+    "test-server": "npm test --prefix server",
+    "server": "npm run watch --prefix server"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/HayatsCodes/job-board/issues"
-  },
-  "homepage": "https://github.com/HayatsCodes/job-board#readme"
+  "license": "ISC"
 }

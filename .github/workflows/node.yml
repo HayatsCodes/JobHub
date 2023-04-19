@@ -1,0 +1,33 @@
+name: JobHub workflow
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+jobs:
+  test:
+    env:
+      SESSION_SECRET: KGGL>HKHVHKWKBKJKJLMNOPKFGHN@$MGTH
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+    strategy:
+      matrix:
+        node-version: [18.x, latest]
+    runs-on: ubuntu-latest
+    services:
+      redis:
+        image: redis
+          ports:
+          - 6379:6379
+    steps:
+      - name: Checks out repository
+        uses: actions/checkout@v3
+      - name: Use node version ${{ matrix.node-version}}
+        uses: actions/setup-node@v3
+        with:
+            node-version: ${{ matrix.node-version }}
+      - name: Install server dependencies
+        run: npm install-server
+      - name: Test server
+        run: npm test-server
+
