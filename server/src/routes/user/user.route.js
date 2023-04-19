@@ -26,7 +26,7 @@ userRouter.post('/signout', (req, res,next) => {
             return res.status(200).json({ message: "Signout successful" });
         });
     } else {
-        return res.status(400).json({error: 'Bad request'});
+        return res.status(400).json({error: 'Invalid session'});
     }
     
 });

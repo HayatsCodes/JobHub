@@ -267,7 +267,7 @@ describe('userRoute', () => {
 
     describe('POST auth/signout', () => {
 
-        test('Should sign out a user successfully', async () => {
+        test('Should sign out a user with valid session successfully', async () => {
           
             const userData = {
               email: "queen@example.com",
@@ -280,6 +280,21 @@ describe('userRoute', () => {
               .expect(200);
           
             expect(res.body.message).toBe('Signout successful');
+          });
+
+        test('Should not sign out a user with invalid session', async () => {
+          
+            const userData = {
+              email: "queen@example.com",
+              password: "password021",
+            };
+          
+            const res = await agent
+              .post('/auth/signout')
+              .expect('Content-Type', /json/)
+              .expect(400);
+          
+            expect(res.body.error).toBe('Invalid session');
           });
           
     });
