@@ -1,5 +1,6 @@
 const express = require('express');
-
 const jobsRouter = express.Router();
+const { isAuthenticated, isAuthorized } = require('../../middleware/auth');
 
-jobsRouter.post('/jobs', isAuthenticated, isAuthorized(['admin', 'employer']), addJob);
+jobsRouter.use(isAuthenticated)
+jobsRouter.post('/jobs', isAuthorized(['admin', 'employer']), addJob);
