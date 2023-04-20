@@ -34,15 +34,15 @@ describe('userRoute', () => {
                 email: "queen@example.com",
                 role: 'user'
             }
-        
+
             const res = await request(app)
                 .post('/api/auth/signup')
                 .send(userData)
                 .expect('Content-Type', /json/)
                 .expect(201);
-        
+
             expect(res.body.message).toBe('Registration sucessful');
-            
+
             const user = await userModel.findOne({ email: userData.email });
             expect(user).toBeDefined();
             expect(user.firstName).toBe(userData.firstName);
@@ -62,13 +62,13 @@ describe('userRoute', () => {
             }
 
             const res = await request(app)
-            .post('/api/auth/signup')
-            .send(userData)
-            .expect('Content-Type', /json/)
-            .expect(409)
+                .post('/api/auth/signup')
+                .send(userData)
+                .expect('Content-Type', /json/)
+                .expect(409)
 
             expect(res.body.error).toBe('User already exist with the given email');
-            
+
         });
 
         test('Should not register user with missing firstName', async () => {
@@ -80,14 +80,14 @@ describe('userRoute', () => {
             }
 
             const res = await request(app)
-            .post('/api/auth/signup')
-            .send(userData)
-            .expect('Content-Type', /json/)
-            .expect(400)
+                .post('/api/auth/signup')
+                .send(userData)
+                .expect('Content-Type', /json/)
+                .expect(400)
 
             expect(res.body.error).toBe('Please enter all the details');
         });
-        
+
         test('Should not register user with missing lastName', async () => {
             const userData = {
                 firstName: "Vanessa",
@@ -97,14 +97,14 @@ describe('userRoute', () => {
             }
 
             const res = await request(app)
-            .post('/api/auth/signup')
-            .send(userData)
-            .expect('Content-Type', /json/)
-            .expect(400)
+                .post('/api/auth/signup')
+                .send(userData)
+                .expect('Content-Type', /json/)
+                .expect(400)
 
             expect(res.body.error).toBe('Please enter all the details');
         });
-        
+
         test('Should not register user with missing password', async () => {
             const userData = {
                 firstName: "Vanessa",
@@ -114,14 +114,14 @@ describe('userRoute', () => {
             }
 
             const res = await request(app)
-            .post('/api/auth/signup')
-            .send(userData)
-            .expect('Content-Type', /json/)
-            .expect(400)
+                .post('/api/auth/signup')
+                .send(userData)
+                .expect('Content-Type', /json/)
+                .expect(400)
 
             expect(res.body.error).toBe('Please enter all the details');
         });
-        
+
         test('Should not register user with missing email', async () => {
             const userData = {
                 firstName: "Vanessa",
@@ -131,14 +131,14 @@ describe('userRoute', () => {
             }
 
             const res = await request(app)
-            .post('/api/auth/signup')
-            .send(userData)
-            .expect('Content-Type', /json/)
-            .expect(400)
+                .post('/api/auth/signup')
+                .send(userData)
+                .expect('Content-Type', /json/)
+                .expect(400)
 
             expect(res.body.error).toBe('Please enter all the details');
         });
-        
+
         test('Should not register user with missing role', async () => {
             const userData = {
                 firstName: "Vanessa",
@@ -148,10 +148,10 @@ describe('userRoute', () => {
             }
 
             const res = await request(app)
-            .post('/api/auth/signup')
-            .send(userData)
-            .expect('Content-Type', /json/)
-            .expect(400)
+                .post('/api/auth/signup')
+                .send(userData)
+                .expect('Content-Type', /json/)
+                .expect(400)
 
             expect(res.body.error).toBe('Please enter all the details');
         });
@@ -166,13 +166,13 @@ describe('userRoute', () => {
             }
 
             const res = await request(app)
-            .post('/api/auth/signup')
-            .send(userData)
-            .expect('Content-Type', /json/)
-            .expect(400)
+                .post('/api/auth/signup')
+                .send(userData)
+                .expect('Content-Type', /json/)
+                .expect(400)
 
             expect(res.body.error).toBe('Please enter a valid email');
-            
+
         });
 
         test('Should not register a user with an invalid role', async () => {
@@ -185,10 +185,10 @@ describe('userRoute', () => {
             }
 
             const res = await request(app)
-            .post('/api/auth/signup')
-            .send(userData)
-            .expect('Content-Type', /json/)
-            .expect(400)
+                .post('/api/auth/signup')
+                .send(userData)
+                .expect('Content-Type', /json/)
+                .expect(400)
 
             expect(res.body.error).toBe('Please enter a valid role');
         });
@@ -203,34 +203,34 @@ describe('userRoute', () => {
             }
 
             const res = await request(app)
-            .post('/api/auth/signup')
-            .send(userData)
-            .expect('Content-Type', /json/)
-            .expect(400)
+                .post('/api/auth/signup')
+                .send(userData)
+                .expect('Content-Type', /json/)
+                .expect(400)
 
             expect(res.body.error).toBe('Password must be at least 8 characters long');
         });
-        
+
     });
 
     describe('POST auth/signin', () => {
 
-        test('Should Login a valid user succesfully', async () => {
+        test('Should Login a valid user successfully', async () => {
             const userData = {
                 email: "queen@example.com",
                 password: "password021",
             }
-
+        
             agent = request.agent(app);
             const res = await agent
-            .post('/api/auth/signin')
-            .send(userData)
-            .expect('Content-Type', /json/)
-            .expect(200)
-
+                .post('/api/auth/signin')
+                .send(userData)
+                .expect('Content-Type', /json/)
+                .expect(200);
+                    
             expect(res.body.message).toBe('Signin successful');
-
         });
+        
 
         test('Should not login a user with invalid email', async () => {
             const userData = {
@@ -239,10 +239,10 @@ describe('userRoute', () => {
             }
 
             const res = await request(app)
-            .post('/api/auth/signin')
-            .send(userData)
-            .expect('Content-Type', /json/)
-            .expect(401)
+                .post('/api/auth/signin')
+                .send(userData)
+                .expect('Content-Type', /json/)
+                .expect(401)
 
             expect(res.body.error).toBe('Incorrect email or password');
         });
@@ -254,10 +254,10 @@ describe('userRoute', () => {
             }
 
             const res = await request(app)
-            .post('/api/auth/signin')
-            .send(userData)
-            .expect('Content-Type', /json/)
-            .expect(401)
+                .post('/api/auth/signin')
+                .send(userData)
+                .expect('Content-Type', /json/)
+                .expect(401)
 
             expect(res.body.error).toBe('Incorrect email or password');
         });
@@ -268,34 +268,34 @@ describe('userRoute', () => {
     describe('POST auth/signout', () => {
 
         test('Should sign out a user with valid session successfully', async () => {
-          
+
             const userData = {
-              email: "queen@example.com",
-              password: "password021",
+                email: "queen@example.com",
+                password: "password021",
             };
-          
+
             const res = await agent
-              .post('/api/auth/signout')
-              .expect('Content-Type', /json/)
-              .expect(200);
-          
+                .post('/api/auth/signout')
+                .expect('Content-Type', /json/)
+                .expect(200);
+
             expect(res.body.message).toBe('Signout successful');
-          });
+        });
 
         test('Should not sign out a user with invalid session', async () => {
-          
+
             const userData = {
-              email: "queen@example.com",
-              password: "password021",
+                email: "queen@example.com",
+                password: "password021",
             };
-          
+
             const res = await agent
-              .post('/api/auth/signout')
-              .expect('Content-Type', /json/)
-              .expect(400);
-          
+                .post('/api/auth/signout')
+                .expect('Content-Type', /json/)
+                .expect(400);
+
             expect(res.body.error).toBe('Invalid session');
-          });
-          
+        });
+
     });
 });
