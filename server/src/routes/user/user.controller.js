@@ -1,5 +1,6 @@
 const bcrypt = require('bcryptjs');
 const validator = require('validator');
+const passport = require('passport');
 const userModel = require('../../models/user.model');
 
 async function registerUser(req, res) {
@@ -16,7 +17,7 @@ async function registerUser(req, res) {
             return res.status(400).json({ error: 'Please enter a valid email' });
         }
 
-        
+
         if (password.length < 8) {
             return res.status(400).json({ error: 'Password must be at least 8 characters long' });
         }
@@ -44,7 +45,15 @@ async function registerUser(req, res) {
         const user = new userModel(newUser);
         await user.save();
 
-        req.login({ id: user._id, role }, () => {
+        passport.serializeUser((user, done) => {
+            done(null, { id: user._id, role: user.role });
+        });
+
+        passport.deserializeUser((user, done) => {
+            return done(null, user);
+        });
+
+        req.login(user, () => {
             return res.status(201).json({ message: "Registration sucessful" });
         });
     } catch (err) {

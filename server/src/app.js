@@ -7,6 +7,7 @@ const { createClient } = require('redis');
 const passport = require('passport');
 const userRouter = require('./routes/user/user.route');
 const userModel = require('./models/user.model');
+const jobsRouter = require('./routes/jobs/jobs.route');
 require('./utils/passport')(passport, userModel);
 
 const redisClient = createClient();
@@ -24,6 +25,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(morgan('combined'));
 app.use('/api/auth', userRouter);
+app.use('/api/jobs', jobsRouter);
 
 
 const isWindows = os.platform() === 'win32';
