@@ -14,6 +14,24 @@
     }
 }
 
+async function getJobs(req, res) {
+    try {
+        const jobs = await jobModel.find({status: 'published'});
+        res.status(200).json(jobs);
+    } catch (err) {
+        console.log(err.stack)
+        return res.status(400).json({error: 'Encountered an error'});
+    }
+}
+
+async function getJob(req, res) {
+
+}
+
+
+
 module.exports = {
     addJob,
+    getJobs,
+    getJob
 }
