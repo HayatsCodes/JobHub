@@ -1,6 +1,7 @@
 const express = require('express');
 const passport = require('passport');
 const userRouter = express.Router();
+ const { isAuthenticated } = require('../../middleware/auth');
 
 const registerUser = require('./user.controller');
 
@@ -19,16 +20,13 @@ userRouter.post('/signin', (req, res, next) => {
     })(req, res, next);
   });
   
-userRouter.post('/signout', (req, res,next) => {
-    if (req.user) {
+userRouter.post('/signout', isAuthenticated, (req, res, next) => {
         req.logout((err) => {
             if (err) { return next(err); }
             return res.status(200).json({ message: "Signout successful" });
         });
-    } else {
-        return res.status(400).json({error: 'Invalid session'});
     }
     
-});
+);
 
 module.exports = userRouter;

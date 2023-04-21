@@ -2,7 +2,7 @@ async function isAuthenticated(req, res, next) {
     if (req.user) {
         return next();
     }
-    return res.status(401).json({ error: "Unauthorized" }); 
+    return res.status(401).json({ error: "Authentication error" }); 
 }
 
 function isAuthorized(allowedRoles) {

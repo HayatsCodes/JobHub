@@ -292,9 +292,9 @@ describe('userRoute', () => {
             const res = await agent
                 .post('/api/auth/signout')
                 .expect('Content-Type', /json/)
-                .expect(400);
+                .expect(401);
 
-            expect(res.body.error).toBe('Invalid session');
+            expect(res.body.error).toBe('Authentication error');
         });
 
     });
