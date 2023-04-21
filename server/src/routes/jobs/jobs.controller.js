@@ -25,7 +25,17 @@ async function getJobs(req, res) {
 }
 
 async function getJob(req, res) {
-
+    try {
+        const { id }= req.params;
+        const job = await jobModel.findById(id);
+        if (job && job.status === 'published') {
+            return res.status(200).json(job);
+        }
+        res.status(404).json({error: 'Job not found'});
+    } catch (err) {
+        console.log(err.stack)
+        return res.status(404).json({error: 'Job not found'});
+    }
 }
 
 
