@@ -41,7 +41,7 @@ async function getJob(req, res) {
 async function getEmployerJobs(req, res) {
     try {
         if (req.user.role === 'admin') {
-            const employerId = req.params.employerId
+            const employerId = req.query.employerId
             if (!employerId) {
                 return res.status(400).json( {err: 'Invalid request'} )
             }
@@ -60,7 +60,13 @@ async function getEmployerJobs(req, res) {
 }
 
 async function getEmployerJob(req, res) {
-
+    try {
+            const jobId = req.params.id;
+            const employerJob = await jobModel.findById(jobId);
+            return res.status(200).json(employerJob);
+    } catch (err) {
+        return res.status(400).json({error: 'Invalid request'});
+    }
 }
 
 
