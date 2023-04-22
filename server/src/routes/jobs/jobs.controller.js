@@ -97,8 +97,8 @@ async function deleteJob(req, res) {
         if (req.user.role === 'admin') {
             const jobId = req.params.id;
             const employerJob = await jobModel.findByIdAndDelete(jobId);
-            if (employerJob.deletedCount === 0) {
-                return res.json({ error: 'Job could not be deleted' });
+            if (!employerJob) {
+                return res.status(400).json({ error: 'Job not found' });
             }
             res.status(200).json({ message: 'Job deleted successfully' });
         } else if (req.user.role === 'employer') {
@@ -108,10 +108,10 @@ async function deleteJob(req, res) {
                 return res.status(400).json({error: 'Job not found!'});
             }
             employerJob = await jobModel.findByIdAndDelete(jobId);
-            if (employerJob.deletedCount === 0) {
-                return res.json({ error: 'Job could not be deleted' });
+            if (!employerJob) {
+                return res.status(400).json({ error: 'Job not found' });
             }
-            res.status(200).json({ message: 'Job deleted successfully' });
+            res.status(200).json({ message: 'Job deleted successfully', job: employerJob });
         }
 
     } catch (err) {
@@ -123,10 +123,11 @@ async function deleteJob(req, res) {
 
 module.exports = {
     addJob,
-    getJobs,
-    getJob,
     getEmployerJobs,
     getEmployerJob,
+    searchJob,
+    getJobs,
+    getJob,
     updateJob,
-    deleteJob
+    deleteJob,
 }
