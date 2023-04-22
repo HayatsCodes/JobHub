@@ -29,6 +29,7 @@ module.exports = (passport, User) => {
     );
 
     passport.serializeUser((user, done) => {
+        console.log(user.role)
         done(null, { id: user._id, role: user.role });
     });
 

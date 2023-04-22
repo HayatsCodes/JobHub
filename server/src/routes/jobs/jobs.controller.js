@@ -38,10 +38,37 @@ async function getJob(req, res) {
     }
 }
 
+async function getEmployerJobs(req, res) {
+    try {
+        if (req.user.role === 'admin') {
+            const employerId = req.params.employerId
+            if (!employerId) {
+                return res.status(400).json( {err: 'Invalid request'} )
+            }
+            const employerJobs = await jobModel.find({createdBy: employerId})
+            return res.status(200).json(employerJobs);
+
+        } else if (req.user.role === 'employer') {
+            const employerId = req.user.id;
+            const employerJobs = await jobModel.find({createdBy: employerId})
+            return res.status(200).json(employerJobs);
+        }
+       
+    } catch (err) {
+        return res.status(400).json({error: 'Invalid request'});
+    }
+}
+
+async function getEmployerJob(req, res) {
+
+}
+
 
 
 module.exports = {
     addJob,
     getJobs,
-    getJob
+    getJob,
+    getEmployerJobs,
+    getEmployerJob
 }

@@ -6,7 +6,10 @@ async function isAuthenticated(req, res, next) {
 }
 
 function isAuthorized(allowedRoles) {
+    console.log(allowedRoles)
     return function(req, res, next) {
+        console.log(allowedRoles)
+        console.log(req.user.role)
         if (allowedRoles.includes(req.user.role)) {
             next();
         } else {
