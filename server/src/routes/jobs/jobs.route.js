@@ -6,7 +6,9 @@ const {
     getJobs, 
     getJob, 
     getEmployerJobs, 
-    getEmployerJob 
+    getEmployerJob,
+    updateJob,
+    deleteJob
 } = require('./jobs.controller');
 
 jobsRouter.use(isAuthenticated)
@@ -15,5 +17,7 @@ jobsRouter.get('/employer', isAuthorized(['admin', 'employer']), getEmployerJobs
 jobsRouter.get('/employer/:id', isAuthorized(['admin', 'employer']), getEmployerJob);
 jobsRouter.get('/', isAuthorized(['admin', 'user']), getJobs);
 jobsRouter.get('/:id', isAuthorized(['admin', 'user']), getJob);
+jobsRouter.patch('/employer/:id', isAuthorized(['admin', 'employer']), updateJob);
+jobsRouter.delete('/employer/:id', isAuthorized(['admin', 'employer']), deleteJob);
 
 module.exports = jobsRouter;

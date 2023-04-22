@@ -69,6 +69,56 @@ async function getEmployerJob(req, res) {
     }
 }
 
+async function updateJob(req, res) {
+    try {
+        if (req.user.role === 'admin') {
+            const jobId = req.params.id;
+            const employerJob = await jobModel.findByIdAndUpdate(jobId, req.body, {new: true});
+            return res.status(200).json(employerJob);
+        } else if (req.user.role === 'employer') {
+            const  jobId = req.params.id;
+            let employerJob = await jobModel.find({createdBy: req.user.id, _id: jobId});
+            if (employerJob.length < 1) {
+                return res.status(400).json({error: 'Job not found!'});
+            }
+            employerJob = await jobModel.findByIdAndUpdate(jobId, req.body, {new: true});
+
+            return res.status(200).json(employerJob);
+        }
+
+    } catch (err) {
+        console.log(err.stack);
+        return res.status(400).json({error: 'Invalid request'});
+    }
+}
+
+async function deleteJob(req, res) {
+    try {
+        if (req.user.role === 'admin') {
+            const jobId = req.params.id;
+            const employerJob = await jobModel.findByIdAndDelete(jobId);
+            if (employerJob.deletedCount === 0) {
+                return res.json({ error: 'Job could not be deleted' });
+            }
+            res.status(200).json({ message: 'Job deleted successfully' });
+        } else if (req.user.role === 'employer') {
+            const  jobId = req.params.id;
+            let employerJob = await jobModel.find({createdBy: req.user.id, _id: jobId});
+            if (employerJob.length < 1) {
+                return res.status(400).json({error: 'Job not found!'});
+            }
+            employerJob = await jobModel.findByIdAndDelete(jobId);
+            if (employerJob.deletedCount === 0) {
+                return res.json({ error: 'Job could not be deleted' });
+            }
+            res.status(200).json({ message: 'Job deleted successfully' });
+        }
+
+    } catch (err) {
+        console.log(err.stack);
+        return res.status(400).json({error: 'Invalid request'});
+    }
+}
 
 
 module.exports = {
@@ -76,5 +126,7 @@ module.exports = {
     getJobs,
     getJob,
     getEmployerJobs,
-    getEmployerJob
+    getEmployerJob,
+    updateJob,
+    deleteJob
 }
