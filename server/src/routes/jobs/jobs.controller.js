@@ -125,7 +125,6 @@ module.exports = {
     addJob,
     getEmployerJobs,
     getEmployerJob,
-    searchJob,
     getJobs,
     getJob,
     updateJob,
