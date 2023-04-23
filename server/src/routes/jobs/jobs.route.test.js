@@ -4,8 +4,11 @@ const request = require('supertest');
 require('dotenv').config();
 const app = require('../../app');
 const userModel = require('../../models/user.model');
+const jobModel = require('../../models/job.model');
 
-describe('userRoute', () => {
+
+
+describe('jobRoute', () => {
 
     let mongo;
     // let agent;
@@ -21,33 +24,31 @@ describe('userRoute', () => {
             useUnifiedTopology: true,
         });
 
-        admin = new userModel({
+
+        admin = {
             firstName: 'Admin',
             lastName: 'User',
             email: 'admin@example.com',
-            password: 'password',
+            password:'password',
             role: 'admin',
             admin_key: process.env.ADMIN_KEY
-          });
-          await admin.save();
+        }
 
-          employer = new userModel({
+        employer = {
             firstName: 'One',
             lastName: 'Employer',
             email: 'employer1@example.com',
-            password: 'password',
+            password:'password',
             role: 'employer',
-          });
-          await employer.save();
-          
-          user = new userModel({
+        }
+
+        user = {
             firstName: 'One',
             lastName: 'User',
             email: 'user1@example.com',
-            password: 'password',
+            password:'password',
             role: 'employer',
-          });
-          await user.save();
+        }
     });
 
     afterAll(async () => {
@@ -58,29 +59,34 @@ describe('userRoute', () => {
     describe('POST /api/jobs', () => {
 
         test('Admin should create a job sucessfully', async () => {
-            
+
+            const agent = await request.agent(app);
+            await agent
+                .post('/api/auth/signup')
+                .send(admin)
+                .expect(201);
+
+
             const jobData = {
                 title: 'Software Engineer',
                 description: 'We are looking for a talented software engineer to join our team.',
                 location: 'New York City',
                 salary: 100000,
-                }
+            }
 
-            const res = await request(app)
+            await agent
                 .post('/api/jobs')
                 .send(jobData)
                 .expect('Content-Type', /json/)
                 .expect(201);
 
-            expect(res.body.message).toBe('Registration sucessful');
 
-            const user = await userModel.findOne({ email: jobData.email });
-            expect(user).toBeDefined();
-            expect(user.firstName).toBe(jobData.firstName);
-            expect(user.lastName).toBe(jobData.lastName);
-            expect(user.email).toBe(jobData.email);
-            expect(user.password).not.toBe(jobData.password);
-            expect(user.role).toBe(jobData.role);
-        })
+            const job = await jobModel.findOne({ title: jobData.title });
+            expect(job).toBeDefined();
+            expect(job.description).toBe(jobData.description);
+            expect(job.location).toBe(jobData.location);
+            expect(job.salary).toBe(jobData.salary);
+            expect(job.status).toBe('draft');
+        });
     })
 });

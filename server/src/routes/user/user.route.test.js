@@ -58,7 +58,8 @@ describe('userRoute', () => {
                 lastName: "Pearl",
                 password: "password021",
                 email: "queen@example.com",
-                role: 'admin'
+                role: 'admin',
+                admin_key: process.env.ADMIN_KEY
             }
 
             const res = await request(app)
