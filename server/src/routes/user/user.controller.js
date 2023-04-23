@@ -5,7 +5,7 @@ const userModel = require('../../models/user.model');
 
 async function registerUser(req, res) {
     try {
-        const { firstName, lastName, email, password, role } = req.body;
+        const { firstName, lastName, email, password, role, admin_key } = req.body;
 
         if (!firstName || !lastName || !email || !password || !role) {
             return res.status(400).json({ error: 'Please enter all the details' });
@@ -26,11 +26,16 @@ async function registerUser(req, res) {
             return res.status(400).json({ error: 'Please enter a valid role' });
         }
 
+        if (role === 'admin') {
+            if (admin_key !== process.env.ADMIN_KEY) {
+                return res.status(401).json({ error: 'Invalid Admin key' });
+            }
+        }
+
         const UserExist = await userModel.findOne({ email });
         if (UserExist) {
             return res.status(409).json({ error: 'User already exist with the given email' });
         }
-
 
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
