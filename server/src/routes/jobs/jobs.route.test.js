@@ -15,8 +15,9 @@ describe('jobRoute', () => {
     let admin;
     let employer;
     let user;
-    let superAgent;
+    let adminAgent;
     let employerId;
+    let employerAgent;
 
     beforeAll(async () => {
         mongo = await MongoMemoryServer.create();
@@ -90,7 +91,7 @@ describe('jobRoute', () => {
             expect(job.salary).toBe(jobData.salary);
             expect(job.status).toBe('draft');
 
-            superAgent = agent;
+            adminAgent = agent;
         });
 
         test('Should create a job sucessfully with an employer role', async () => {
@@ -124,6 +125,7 @@ describe('jobRoute', () => {
             expect(job.salary).toBe(jobData.salary);
             expect(job.status).toBe('published');
 
+            employerAgent = agent;
             employerId = job.createdBy;
         });
 
@@ -159,7 +161,7 @@ describe('jobRoute', () => {
     describe('GET /api/jobs/employer', () => {
 
         test('Should be able to get employer jobs with admin role', async () => {
-            const res = await superAgent
+            const res = await adminAgent
                 .get(`/api/jobs/employer?employerId=${employerId}`)
                 .expect('Content-Type', /json/)
                 .expect(200)
@@ -170,8 +172,8 @@ describe('jobRoute', () => {
         });
 
         test('Should be able to get employer owned jobs with employer role', async () => {
-            const res = await superAgent
-                .get(`/api/jobs/employer?employerId=${employerId}`)
+            const res = await employerAgent
+                .get('/api/jobs/employer')
                 .expect('Content-Type', /json/)
                 .expect(200)
 
