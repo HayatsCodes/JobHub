@@ -58,7 +58,7 @@ describe('jobRoute', () => {
 
     describe('POST /api/jobs', () => {
 
-        test('Admin should create a job sucessfully', async () => {
+        test('Should create a job sucessfully with an admin role', async () => {
 
             const agent = await request.agent(app);
             await agent
