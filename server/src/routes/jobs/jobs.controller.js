@@ -40,7 +40,7 @@ async function getJob(req, res) {
 
 async function getEmployerJobs(req, res) {
     try {
-        if (req.user.role === 'admin') {
+        if (req.user.role === 'admin' || req.user.role === 'user') {
             const employerId = req.query.employerId
             if (!employerId) {
                 return res.status(400).json( {err: 'Invalid request'} )

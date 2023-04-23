@@ -18,6 +18,7 @@ describe('jobRoute', () => {
     let adminAgent;
     let employerId;
     let employerAgent;
+    let userAgent;
 
     beforeAll(async () => {
         mongo = await MongoMemoryServer.create();
@@ -137,6 +138,7 @@ describe('jobRoute', () => {
                 .send(user)
                 .expect(201);
 
+            userAgent = agent;
 
             const jobData = {
                 title: 'Data Analyst',
@@ -160,7 +162,7 @@ describe('jobRoute', () => {
 
     describe('GET /api/jobs/employer', () => {
 
-        test('Should be able to get employer jobs with admin role', async () => {
+        test('Should be able to get employer jobs by id with admin role', async () => {
             const res = await adminAgent
                 .get(`/api/jobs/employer?employerId=${employerId}`)
                 .expect('Content-Type', /json/)
@@ -182,7 +184,16 @@ describe('jobRoute', () => {
             expect(res.body[0].status).toBe('published');
         });
 
-        
+        test('Should be able to get employer jobs by id with user role', async () => {
+            const res = await userAgent
+                .get(`/api/jobs/employer?employerId=${employerId}`)
+                .expect('Content-Type', /json/)
+                .expect(200)
+
+            expect(res.body[0]).toBeDefined();
+            expect(res.body[0].title).toBe('Data Analyst');
+            expect(res.body[0].status).toBe('published');
+        });
 
     })
 });
