@@ -29,7 +29,7 @@ describe('jobRoute', () => {
             firstName: 'Admin',
             lastName: 'User',
             email: 'admin@example.com',
-            password:'password',
+            password: 'password',
             role: 'admin',
             admin_key: process.env.ADMIN_KEY
         }
@@ -38,7 +38,7 @@ describe('jobRoute', () => {
             firstName: 'One',
             lastName: 'Employer',
             email: 'employer1@example.com',
-            password:'password',
+            password: 'password',
             role: 'employer',
         }
 
@@ -46,7 +46,7 @@ describe('jobRoute', () => {
             firstName: 'One',
             lastName: 'User',
             email: 'user1@example.com',
-            password:'password',
+            password: 'password',
             role: 'employer',
         }
     });
@@ -88,5 +88,38 @@ describe('jobRoute', () => {
             expect(job.salary).toBe(jobData.salary);
             expect(job.status).toBe('draft');
         });
+
+        test('Should create a job sucessfully with an employer role', async () => {
+
+            const agent = await request.agent(app);
+            await agent
+                .post('/api/auth/signup')
+                .send(employer)
+                .expect(201);
+
+
+            const jobData = {
+                title: 'Data Analyst',
+                description: 'We are seeking a data analyst to analyze large data sets and provide insights.',
+                location: 'San Francisco',
+                salary: 80000,
+                status: 'published'
+            }
+
+            await agent
+                .post('/api/jobs')
+                .send(jobData)
+                .expect('Content-Type', /json/)
+                .expect(201);
+
+
+            const job = await jobModel.findOne({ title: jobData.title });
+            expect(job).toBeDefined();
+            expect(job.description).toBe(jobData.description);
+            expect(job.location).toBe(jobData.location);
+            expect(job.salary).toBe(jobData.salary);
+            expect(job.status).toBe('published');
+        });
+
     })
 });
