@@ -47,7 +47,7 @@ describe('jobRoute', () => {
             lastName: 'User',
             email: 'user1@example.com',
             password: 'password',
-            role: 'employer',
+            role: 'user',
         }
     });
 
@@ -119,6 +119,33 @@ describe('jobRoute', () => {
             expect(job.location).toBe(jobData.location);
             expect(job.salary).toBe(jobData.salary);
             expect(job.status).toBe('published');
+        });
+
+        test('Should not create a job with a user role', async () => {
+
+            const agent = await request.agent(app);
+            await agent
+                .post('/api/auth/signup')
+                .send(user)
+                .expect(201);
+
+
+            const jobData = {
+                title: 'Data Analyst',
+                description: 'We are seeking a data analyst to analyze large data sets and provide insights.',
+                location: 'San Francisco',
+                salary: 80000,
+                status: 'published'
+            }
+
+            const res = await agent
+                .post('/api/jobs')
+                .send(jobData)
+                .expect('Content-Type', /json/)
+                .expect(401);
+
+
+            expect(res.body.error).toBe('Unauthorized');
         });
 
     })
