@@ -19,6 +19,7 @@ describe('jobRoute', () => {
     let employerId;
     let employerAgent;
     let userAgent;
+    let jobId;
 
     beforeAll(async () => {
         mongo = await MongoMemoryServer.create();
@@ -128,6 +129,7 @@ describe('jobRoute', () => {
 
             employerAgent = agent;
             employerId = job.createdBy;
+            jobId = job._id;
         });
 
         test('Should not create a job with a user role', async () => {
@@ -162,7 +164,7 @@ describe('jobRoute', () => {
 
     describe('GET /api/jobs/employer', () => {
 
-        test('Should be able to get employer jobs by id with admin role', async () => {
+        test('Should be able to get employer jobs by employerId with admin role', async () => {
             const res = await adminAgent
                 .get(`/api/jobs/employer?employerId=${employerId}`)
                 .expect('Content-Type', /json/)
@@ -184,7 +186,7 @@ describe('jobRoute', () => {
             expect(res.body[0].status).toBe('published');
         });
 
-        test('Should be able to get employer jobs by id with user role', async () => {
+        test('Should be able to get employer jobs by employerId with user role', async () => {
             const res = await userAgent
                 .get(`/api/jobs/employer?employerId=${employerId}`)
                 .expect('Content-Type', /json/)
@@ -195,5 +197,18 @@ describe('jobRoute', () => {
             expect(res.body[0].status).toBe('published');
         });
 
+    });
+
+    describe('GET /api/jobs/employer/:id', () => {
+
+        test('Should be able to get employer owned job by jobId with the employer role', async () => {
+            const res = await employerAgent
+            .get(`/api/jobs/employer/${jobId}`)
+            .expect('Content-Type', /json/)
+            .expect(200)
+
+        expect(res.body.title).toBe('Data Analyst');
+        expect(res.body.status).toBe('published');
+        })
     })
 });

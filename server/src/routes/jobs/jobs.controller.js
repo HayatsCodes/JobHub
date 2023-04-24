@@ -63,6 +63,9 @@ async function getEmployerJob(req, res) {
     try {
             const jobId = req.params.id;
             const employerJob = await jobModel.findById(jobId);
+            if (!employerJob) {
+                return res.status(400).json( {err: 'Job not found'} );
+            }
             return res.status(200).json(employerJob);
     } catch (err) {
         return res.status(400).json({error: 'Invalid request'});
