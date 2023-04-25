@@ -338,25 +338,21 @@ describe('jobRoute', () => {
     })
 
     describe('PATCH /api/jobs/:id', () => {
-        // @todo:
-        // test: update a joby by id with admin role
-        // test: update employer owned job by id with employer role
-        // test: should not update a job by id with user role
-        // test: should not update another employer job with employer role
+
         test('Should update a job by by id with admin role', async () => {
             const updatedDetails = {
                 description: 'A competent data analyst with 3+ years of experience'
             }
             const res = await adminAgent
-            .patch(`/api/jobs/employer/${jobId}`)
-            .send(updatedDetails)
-            .expect('Content-Type', /json/)
-            .expect(200)
+                .patch(`/api/jobs/employer/${jobId}`)
+                .send(updatedDetails)
+                .expect('Content-Type', /json/)
+                .expect(200)
 
 
 
-        expect(res.body.title).toBe('Data Analyst');
-        expect(res.body.description).toBe('A competent data analyst with 3+ years of experience');
+            expect(res.body.title).toBe('Data Analyst');
+            expect(res.body.description).toBe('A competent data analyst with 3+ years of experience');
         });
 
         test('Should update an employer owned job by by id with employer role', async () => {
@@ -364,15 +360,15 @@ describe('jobRoute', () => {
                 description: 'A competent data analyst with 2+ years of professional working experience'
             }
             const res = await employerAgent
-            .patch(`/api/jobs/employer/${jobId}`)
-            .send(updatedDetails)
-            .expect('Content-Type', /json/)
-            .expect(200)
+                .patch(`/api/jobs/employer/${jobId}`)
+                .send(updatedDetails)
+                .expect('Content-Type', /json/)
+                .expect(200)
 
 
 
-        expect(res.body.title).toBe('Data Analyst');
-        expect(res.body.description).toBe('A competent data analyst with 2+ years of professional working experience');
+            expect(res.body.title).toBe('Data Analyst');
+            expect(res.body.description).toBe('A competent data analyst with 2+ years of professional working experience');
         });
 
         test('Should not update a job by id with user role', async () => {
@@ -380,12 +376,12 @@ describe('jobRoute', () => {
                 description: 'A competent data analyst with 2+ years of professional working experience'
             }
             const res = await userAgent
-            .patch(`/api/jobs/employer/${jobId}`)
-            .send(updatedDetails)
-            .expect('Content-Type', /json/)
-            .expect(401);
+                .patch(`/api/jobs/employer/${jobId}`)
+                .send(updatedDetails)
+                .expect('Content-Type', /json/)
+                .expect(401);
 
-        expect(res.body.error).toBe('Unauthorized');
+            expect(res.body.error).toBe('Unauthorized');
         });
 
         test('Should not update another employer job with employer role', async () => {
@@ -404,5 +400,17 @@ describe('jobRoute', () => {
         // test: delete employer owned job by id with employer role
         // test: should not delete a job by id with user role
         // test: should not delete another employer job with employer role
+        test('Should delete a job by id with admin role', async () => {
+        
+            const res = await adminAgent
+                .delete(`/api/jobs/employer/${jobId2}`)
+                .expect('Content-Type', /json/)
+                .expect(200)
+
+                expect(res.body.message).toBe('Job deleted successfully');
+        });
+
+        
+
     })
-});
+})
