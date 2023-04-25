@@ -84,12 +84,15 @@ async function updateJob(req, res) {
         if (req.user.role === 'admin') {
             const jobId = req.params.id;
             const employerJob = await jobModel.findByIdAndUpdate(jobId, req.body, { new: true });
+            if (!employerJob) {
+                return res.status(404).json('Job not found');
+            }
             return res.status(200).json(employerJob);
         } else if (req.user.role === 'employer') {
             const jobId = req.params.id;
             let employerJob = await jobModel.find({ createdBy: req.user.id, _id: jobId });
             if (employerJob.length < 1) {
-                return res.status(400).json({ error: 'Job not found!' });
+                return res.status(404).json({ error: 'Job not found' });
             }
             employerJob = await jobModel.findByIdAndUpdate(jobId, req.body, { new: true });
 

@@ -375,7 +375,7 @@ describe('jobRoute', () => {
         expect(res.body.description).toBe('A competent data analyst with 2+ years of professional working experience');
         });
 
-        test('should not update a job by id with user role', async () => {
+        test('Should not update a job by id with user role', async () => {
             const updatedDetails = {
                 description: 'A competent data analyst with 2+ years of professional working experience'
             }
@@ -386,6 +386,15 @@ describe('jobRoute', () => {
             .expect(401);
 
         expect(res.body.error).toBe('Unauthorized');
+        });
+
+        test('Should not update another employer job with employer role', async () => {
+            const res = await employerAgent
+                .patch(`/api/jobs/employer/${jobId2}`)
+                .expect('Content-Type', /json/)
+                .expect(404)
+
+            expect(res.body.error).toBe('Job not found');
         });
     })
 
