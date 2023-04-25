@@ -358,6 +358,35 @@ describe('jobRoute', () => {
         expect(res.body.title).toBe('Data Analyst');
         expect(res.body.description).toBe('A competent data analyst with 3+ years of experience');
         });
+
+        test('Should update an employer owned job by by id with employer role', async () => {
+            const updatedDetails = {
+                description: 'A competent data analyst with 2+ years of professional working experience'
+            }
+            const res = await employerAgent
+            .patch(`/api/jobs/employer/${jobId}`)
+            .send(updatedDetails)
+            .expect('Content-Type', /json/)
+            .expect(200)
+
+
+
+        expect(res.body.title).toBe('Data Analyst');
+        expect(res.body.description).toBe('A competent data analyst with 2+ years of professional working experience');
+        });
+
+        test('should not update a job by id with user role', async () => {
+            const updatedDetails = {
+                description: 'A competent data analyst with 2+ years of professional working experience'
+            }
+            const res = await userAgent
+            .patch(`/api/jobs/employer/${jobId}`)
+            .send(updatedDetails)
+            .expect('Content-Type', /json/)
+            .expect(401);
+
+        expect(res.body.error).toBe('');
+        });
     })
 
     describe('DELETE /api/jobs/:id', () => {
