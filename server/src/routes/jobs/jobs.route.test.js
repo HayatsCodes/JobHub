@@ -433,6 +433,16 @@ describe('jobRoute', () => {
                 expect(res.body.error).toBe('Unauthorized');
         });
 
+        test('should not delete another employer job with employer role', async () => {
+        
+            const res = await employerAgent
+                .delete(`/api/jobs/employer/${jobId2}`)
+                .expect('Content-Type', /json/)
+                .expect(404)
+
+                expect(res.body.error).toBe('Job not found');
+        });
+
 
         
 

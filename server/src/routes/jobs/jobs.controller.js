@@ -111,18 +111,18 @@ async function deleteJob(req, res) {
             const jobId = req.params.id;
             const employerJob = await jobModel.findByIdAndDelete(jobId);
             if (!employerJob) {
-                return res.status(400).json({ error: 'Job not found' });
+                return res.status(404).json({ error: 'Job not found' });
             }
             res.status(200).json({ message: 'Job deleted successfully' });
         } else if (req.user.role === 'employer') {
             const jobId = req.params.id;
             let employerJob = await jobModel.find({ createdBy: req.user.id, _id: jobId });
             if (employerJob.length < 1) {
-                return res.status(400).json({ error: 'Job not found!' });
+                return res.status(404).json({ error: 'Job not found' });
             }
             employerJob = await jobModel.findByIdAndDelete(jobId);
             if (!employerJob) {
-                return res.status(400).json({ error: 'Job not found' });
+                return res.status(404).json({ error: 'Job not found' });
             }
             res.status(200).json({ message: 'Job deleted successfully', job: employerJob });
         }
