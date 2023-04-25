@@ -244,13 +244,13 @@ describe('jobRoute', () => {
 
         test('Should be able to get employer owned job by jobId with the employer role', async () => {
             const res = await employerAgent
-            .get(`/api/jobs/employer/${jobId}`)
-            .expect('Content-Type', /json/)
-            .expect(200)
+                .get(`/api/jobs/employer/${jobId}`)
+                .expect('Content-Type', /json/)
+                .expect(200)
 
 
-        expect(res.body.title).toBe('Data Analyst');
-        expect(res.body.status).toBe('published');
+            expect(res.body.title).toBe('Data Analyst');
+            expect(res.body.status).toBe('published');
         });
 
         test('Should not get another employer job with employer role', async () => {
@@ -265,12 +265,12 @@ describe('jobRoute', () => {
     });
 
     describe('GET /api/jobs', () => {
-        
+
         test('Should get all published jobs with admin role', async () => {
             const res = await adminAgent
-            .get('/api/jobs')
-            .expect('Content-Type', /json/)
-            .expect(200)
+                .get('/api/jobs')
+                .expect('Content-Type', /json/)
+                .expect(200)
 
 
             expect(res.body[0]).toBeDefined();
@@ -284,9 +284,9 @@ describe('jobRoute', () => {
 
         test('Should get all published jobs with user role', async () => {
             const res = await userAgent
-            .get('/api/jobs')
-            .expect('Content-Type', /json/)
-            .expect(200)
+                .get('/api/jobs')
+                .expect('Content-Type', /json/)
+                .expect(200)
 
 
             expect(res.body[0]).toBeDefined();
@@ -300,21 +300,32 @@ describe('jobRoute', () => {
 
         test('Should not get all published jobs with employer role', async () => {
             const res = await employerAgent
-            .get('/api/jobs')
-            .expect('Content-Type', /json/)
-            .expect(401)
+                .get('/api/jobs')
+                .expect('Content-Type', /json/)
+                .expect(401)
 
             expect(res.body.error).toBe('Unauthorized');
 
         });
 
-        
+
     });
 
     describe('GET /api/jobs/:id', () => {
         // @todo:
         // test: get a joby by id with admin role
         // test: get a job by id with user role
+        test('Should get a job by id with admin role', async () => {
+            const res = await adminAgent
+                .get(`/api/jobs/${jobId}`)
+                .expect('Content-Type', /json/)
+                .expect(200)
+
+
+            expect(res.body.title).toBe('Data Analyst');
+            expect(res.body.status).toBe('published');
+        });
+
     })
 
     describe('PATCH /api/jobs/:id', () => {
