@@ -233,6 +233,9 @@ describe('jobRoute', () => {
                 .get(`/api/jobs/employer?employerId=${employerId}`)
                 .expect('Content-Type', /json/)
                 .expect(401)
+
+            expect(res.body.error).toBe('Unauthorized');
+
         });
 
     });
@@ -262,10 +265,6 @@ describe('jobRoute', () => {
     });
 
     describe('GET /api/jobs', () => {
-        // @todo:
-        // test: get all jobs with admin role
-        //  test: get all jobs with user role
-        //  test: should not get all jobs with employer role
         
         test('Should get all published jobs with admin role', async () => {
             const res = await adminAgent
@@ -299,9 +298,18 @@ describe('jobRoute', () => {
             expect(res.body[1].status).toBe('published');
         });
 
+        test('Should not get all published jobs with employer role', async () => {
+            const res = await employerAgent
+            .get('/api/jobs')
+            .expect('Content-Type', /json/)
+            .expect(401)
+
+            expect(res.body.error).toBe('Unauthorized');
+
+        });
 
         
-    })
+    });
 
     describe('GET /api/jobs/:id', () => {
         // @todo:
