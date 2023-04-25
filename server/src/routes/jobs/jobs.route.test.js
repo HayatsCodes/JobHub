@@ -385,7 +385,7 @@ describe('jobRoute', () => {
             .expect('Content-Type', /json/)
             .expect(401);
 
-        expect(res.body.error).toBe('');
+        expect(res.body.error).toBe('Unauthorized');
         });
     })
 
