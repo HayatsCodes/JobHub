@@ -410,6 +410,15 @@ describe('jobRoute', () => {
                 expect(res.body.message).toBe('Job deleted successfully');
         });
 
+        test('Should delete employer owned job by id with employer role', async () => {
+        
+            const res = await employerAgent
+                .delete(`/api/jobs/employer/${jobId}`)
+                .expect('Content-Type', /json/)
+                .expect(200)
+
+                expect(res.body.message).toBe('Job deleted successfully');
+        });
         
 
     })
