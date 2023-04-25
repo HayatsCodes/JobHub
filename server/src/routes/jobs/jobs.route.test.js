@@ -326,6 +326,17 @@ describe('jobRoute', () => {
             expect(res.body.status).toBe('published');
         });
 
+        test('Should get a job by id with user role', async () => {
+            const res = await userAgent
+                .get(`/api/jobs/${jobId}`)
+                .expect('Content-Type', /json/)
+                .expect(200)
+
+
+            expect(res.body.title).toBe('Data Analyst');
+            expect(res.body.status).toBe('published');
+        });
+
     })
 
     describe('PATCH /api/jobs/:id', () => {
