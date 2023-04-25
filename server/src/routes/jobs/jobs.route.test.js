@@ -19,6 +19,7 @@ describe('jobRoute', () => {
     let employerId;
     let employerAgent;
     let userAgent;
+    let jobId0;
     let jobId;
     let jobId2;
 
@@ -103,6 +104,8 @@ describe('jobRoute', () => {
             expect(job.status).toBe('draft');
 
             adminAgent = agent;
+            jobId0  = job._id;
+
         });
 
         test('Should create a job sucessfully with an employer role', async () => {
@@ -403,7 +406,7 @@ describe('jobRoute', () => {
         test('Should delete a job by id with admin role', async () => {
         
             const res = await adminAgent
-                .delete(`/api/jobs/employer/${jobId2}`)
+                .delete(`/api/jobs/employer/${jobId0}`)
                 .expect('Content-Type', /json/)
                 .expect(200)
 
@@ -419,6 +422,18 @@ describe('jobRoute', () => {
 
                 expect(res.body.message).toBe('Job deleted successfully');
         });
+
+        test('should not delete a job by id with user role', async () => {
+        
+            const res = await userAgent
+                .delete(`/api/jobs/employer/${jobId2}`)
+                .expect('Content-Type', /json/)
+                .expect(401)
+
+                expect(res.body.error).toBe('Unauthorized');
+        });
+
+
         
 
     })
