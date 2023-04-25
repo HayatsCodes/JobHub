@@ -312,9 +312,7 @@ describe('jobRoute', () => {
     });
 
     describe('GET /api/jobs/:id', () => {
-        // @todo:
-        // test: get a joby by id with admin role
-        // test: get a job by id with user role
+
         test('Should get a job by id with admin role', async () => {
             const res = await adminAgent
                 .get(`/api/jobs/${jobId}`)
@@ -345,6 +343,21 @@ describe('jobRoute', () => {
         // test: update employer owned job by id with employer role
         // test: should not update a job by id with user role
         // test: should not update another employer job with employer role
+        test('Should update a job by by id with admin role', async () => {
+            const updatedDetails = {
+                description: 'A competent data analyst with 3+ years of experience'
+            }
+            const res = await adminAgent
+            .patch(`/api/jobs/employer/${jobId}`)
+            .send(updatedDetails)
+            .expect('Content-Type', /json/)
+            .expect(200)
+
+
+
+        expect(res.body.title).toBe('Data Analyst');
+        expect(res.body.description).toBe('A competent data analyst with 3+ years of experience');
+        });
     })
 
     describe('DELETE /api/jobs/:id', () => {
