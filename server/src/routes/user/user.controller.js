@@ -62,7 +62,8 @@ async function registerUser(req, res) {
             return res.status(201).json({ message: "Registration sucessful" });
         });
     } catch (err) {
-        return res.status(400).json(err.stack);
+        console.log(err.stack);
+        return res.status(400).json('Something went wrong');
     }
 }
 

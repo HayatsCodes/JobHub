@@ -2,6 +2,7 @@ const os = require('os');
 const express = require('express');
 const session = require('express-session');
 const morgan = require('morgan');
+const cors = require('cors');
 const RedisStore = require("connect-redis").default
 const { createClient } = require('redis');
 const passport = require('passport');
@@ -14,6 +15,9 @@ const redisClient = createClient();
 redisClient.connect().catch(console.error);
 const app = express();
 
+app.use(cors({
+  origin: 'http://127.0.0.1:5500'
+}));
 app.use(express.json());
 app.use(session({
     store: new RedisStore({ client: redisClient }),
