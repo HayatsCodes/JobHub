@@ -6,6 +6,9 @@ const applicationSchema = new mongoose.Schema({
         ref: 'Job',
         required: true,
     },
+    employer: {
+
+    }, 
     user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
@@ -17,6 +20,7 @@ const applicationSchema = new mongoose.Schema({
         default: 'pending',
     },
     resume: {
+        name: String,
         data: Buffer,
         contentType: String,
     },
