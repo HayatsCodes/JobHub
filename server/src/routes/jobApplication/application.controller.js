@@ -44,9 +44,32 @@ async function getApplications(req, res) {
     }
 }
 
+async function getApplication(req, res) {
+    try {
+      const { id } = req.params;
 
+      if(req.user.role === 'admin') {
+        const application = await applicationModel.findById(id);
+        if (!application) {
+            return res.status(404).json({ error: 'Application not found' });
+          }
+          return res.status(200).json(application);
+      } else if(req.user.role === 'employer') {
+        const application = await applicationModel.findOne({employer: req.user.id, _id: id});
+        if (!application) {
+            return res.status(404).json({ error: 'Application not found' });
+          }
+          return res.status(200).json(application);
+      }
+      
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ error: 'Internal server error' });
+    }
+  }
 
 module.exports = {
     addApplication,
     getApplications,
+    getApplication
 }
