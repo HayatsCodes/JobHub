@@ -1,6 +1,7 @@
 const os = require('os');
 const express = require('express');
 const session = require('express-session');
+const helmet = require('helmet');
 const morgan = require('morgan');
 const cors = require('cors');
 const RedisStore = require("connect-redis").default
@@ -19,6 +20,7 @@ const app = express();
 // app.use(cors({
 //   origin: '*'
 // }));
+app.use(helmet())
 app.use(express.json());
 app.use(session({
     store: new RedisStore({ client: redisClient }),
