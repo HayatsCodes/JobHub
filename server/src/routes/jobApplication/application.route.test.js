@@ -44,14 +44,6 @@ describe('Application Routes', () => {
             role: 'employer',
         }
 
-        employer2 = {
-            firstName: 'Two',
-            lastName: 'Employer',
-            email: 'employer2@example.com',
-            password: 'password',
-            role: 'employer',
-        }
-
         user = {
             firstName: 'One',
             lastName: 'User',
@@ -106,6 +98,7 @@ describe('Application Routes', () => {
                 .post('/api/applications')
                 .field('jobId', jobId)
                 .attach('resume', resumePath);
+            console.log(response.body);
             expect(response.status).toBe(201);
             expect(response.body.resume).toBe('resume.test.pdf');
 
