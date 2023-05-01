@@ -125,14 +125,19 @@ describe('Application Routes', () => {
         
     });
 
-    // describe('GET /applications', () => {
-    //     it('should return all applications for an admin', async () => {
-    //         const response = await request(app)
-    //             .get('/applications')
-    //             .set('Authorization', `Bearer ${token}`);
-    //         expect(response.status).toBe(200);
-    //         expect(response.body.length).toBeGreaterThan(0);
-    //     });
+    describe('GET /applications', () => {
+        it('should return all applications for an admin', async () => {
+            const agent = await request.agent(app);
+            await agent
+                .post('/api/auth/signup')
+                .send(admin)
+                .expect(201);
+            
+            const response = await agent
+                .get('/api/applications')
+            expect(response.status).toBe(200);
+            expect(response.body.length).toBeGreaterThan(0);
+        });
 
     //     it('should return applications for an employer', async () => {
     //         const response = await request(app)
@@ -141,7 +146,7 @@ describe('Application Routes', () => {
     //         expect(response.status).toBe(200);
     //         expect(response.body.length).toBeGreaterThan(0);
     //     });
-    // });
+    });
 
     // describe('GET /applications/:id', () => {
     //     it('should return an application for an admin', async () => {
