@@ -3,19 +3,6 @@ const request = require('supertest');
 const { MongoMemoryServer } = require('mongodb-memory-server');
 const app = require('../../app');
 
-const fs = require('fs');
-
-const filePath = 'src/routes/jobApplication/resume.test.pdf'
-
-
-
-if (fs.existsSync(filePath)) {
-  console.log(`File exists at ${filePath}`);
-} else {
-  console.log(`File does not exist at ${filePath}`);
-}
-
-
 describe('Application Routes', () => {
 
         let mongo;
@@ -108,12 +95,14 @@ describe('Application Routes', () => {
 
     describe('POST /applications', () => {
 
-        it('should create a new application with user role', async () => {
+        test('should create a new application with user role', async () => {
             const agent = await request.agent(app);
             await agent
               .post('/api/auth/signup')
               .send(user)
               .expect(201);
+            
+            userAgent = agent;
           
             const response = await agent
               .post('/api/applications')
@@ -121,18 +110,19 @@ describe('Application Routes', () => {
               .attach('resume', resumePath);
             expect(response.status).toBe(201);
             expect(response.body.resume).toBe('resume.test.pdf');
+
             applicationId = response.body._id;
           });
 
-        // it('should return an error when creating an application without a resume', async () => {
-        //     const response = await request(app)
-        //         .post('/applications')
-        //         .set('Authorization', `Bearer ${token}`)
-        //         .field('jobId', 'job-id')
-        //         .field('name', 'John Doe');
-        //     expect(response.status).toBe(400);
-        //     expect(response.body.error).toBe('Can not create application');
-        // });
+        test('should return an error when creating an application without a resume', async () => {
+            
+            const response = await userAgent
+              .post('/api/applications')
+              .field('jobId', jobId)
+            expect(response.status).toBe(400);
+            expect(response.body.error).toBe('Can not create application');
+        });
+        
     });
 
     // describe('GET /applications', () => {
