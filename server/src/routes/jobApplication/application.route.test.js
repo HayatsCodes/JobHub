@@ -3,6 +3,19 @@ const request = require('supertest');
 const { MongoMemoryServer } = require('mongodb-memory-server');
 const app = require('../../app');
 
+const fs = require('fs');
+
+const filePath = 'src/routes/jobApplication/resume.test.pdf'
+
+
+
+if (fs.existsSync(filePath)) {
+  console.log(`File exists at ${filePath}`);
+} else {
+  console.log(`File does not exist at ${filePath}`);
+}
+
+
 describe('Application Routes', () => {
 
         let mongo;
@@ -19,6 +32,7 @@ describe('Application Routes', () => {
         let jobId0;
         let jobId;
         let jobId2;
+        let resumePath = 'src/routes/jobApplication/resume.test.pdf'
     
         beforeAll(async () => {
             mongo = await MongoMemoryServer.create();
@@ -61,6 +75,28 @@ describe('Application Routes', () => {
                 password: 'password',
                 role: 'user',
             }
+
+            // Create Job to extract jobId
+            const agent = await request.agent(app);
+            await agent
+                .post('/api/auth/signup')
+                .send(employer)
+                .expect(201);
+            
+            const jobData = {
+                title: 'Software Engineer',
+                description: 'We are looking for a talented software engineer to join our team.',
+                location: 'New York City',
+                salary: 100000,
+            }
+
+            const res = await agent
+                .post('/api/jobs')
+                .send(jobData)
+                .expect('Content-Type', /json/)
+                .expect(201);
+            
+            jobId = res.body._id;
         });
     
         afterAll(async () => {
@@ -81,8 +117,8 @@ describe('Application Routes', () => {
           
             const response = await agent
               .post('/api/applications')
-              .field('jobId', 'job-id')
-              .attach('resume', 'resume.test.pdf');
+              .field('jobId', jobId)
+              .attach('resume', resumePath);
             expect(response.status).toBe(201);
             expect(response.body.resume).toBe('resume.test.pdf');
             applicationId = response.body._id;
