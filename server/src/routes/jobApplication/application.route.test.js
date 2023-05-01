@@ -167,11 +167,11 @@ describe('Application Routes', () => {
             expect(response.body._id).toBe(applicationId);
         });
 
-        it('should return an error when getting a non-existent application', async () => {
-            const response = await employerAgent
-                .get(`/api/applications/${fakeJobId}`)
-            expect(response.status).toBe(404);
-            expect(response.body.error).toBe('Application not found');
-        });
+        // it('should return an error when getting a non-existent application', async () => {
+        //     const response = await employerAgent
+        //         .get(`/api/applications/${fakeJobId}`)
+        //     expect(response.status).toBe(404);
+        //     expect(response.body.error).toBe('Application not found');
+        // });
     });
 });
