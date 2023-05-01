@@ -28,7 +28,7 @@ async function addApplication(req, res) {
         }
         return res.status(400).json({ error: 'Can not create application' });
     } catch(error)  {
-        console.error(error);
+        console.log(error.stack);
         return res.status(500).json({ error: 'Internal server error' });
     }
     
