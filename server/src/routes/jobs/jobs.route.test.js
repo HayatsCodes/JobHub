@@ -10,7 +10,6 @@ const jobModel = require('../../models/job.model');
 describe('jobRoute', () => {
 
     let mongo;
-    // let agent;
     let admin;
     let employer;
     let employer2;

@@ -6,17 +6,13 @@ const app = require('../../app');
 describe('Application Routes', () => {
 
     let mongo;
-    // let agent;
     let admin;
     let employer;
-    // let employer2;
     let user;
     let applicationId;
     let adminAgent;
-    // let employerId;
     let employerAgent;
     let userAgent;
-    // let jobId0;
     let jobId;
     let resumePath = 'src/routes/jobApplication/resume.test.pdf'
     // let fakeJobId = new mongoose.Types.ObjectId();

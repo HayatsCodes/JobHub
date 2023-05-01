@@ -69,7 +69,7 @@ async function getApplication(req, res) {
       }
       
     } catch (error) {
-      console.error(error);
+      console.log(error.stack);
       return res.status(500).json({ error: 'Internal server error' });
     }
   }
