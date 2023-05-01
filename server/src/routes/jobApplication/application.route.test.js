@@ -69,6 +69,8 @@ describe('Application Routes', () => {
                 .post('/api/auth/signup')
                 .send(employer)
                 .expect(201);
+
+            employerAgent = agent;
             
             const jobData = {
                 title: 'Software Engineer',
@@ -139,13 +141,13 @@ describe('Application Routes', () => {
             expect(response.body.length).toBeGreaterThan(0);
         });
 
-    //     it('should return applications for an employer', async () => {
-    //         const response = await request(app)
-    //             .get('/applications')
-    //             .set('Authorization', `Bearer ${token}`);
-    //         expect(response.status).toBe(200);
-    //         expect(response.body.length).toBeGreaterThan(0);
-    //     });
+        it('should return applications for an employer', async () => {
+            
+            const response = await employerAgent
+                .get('/api/applications')
+            expect(response.status).toBe(200);
+            expect(response.body.length).toBeGreaterThan(0);
+        });
     });
 
     // describe('GET /applications/:id', () => {
