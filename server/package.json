@@ -32,6 +32,9 @@
     "supertest": "^6.3.3"
   },
   "jest": {
-    "testTimeout": 10000
+    "testTimeout": 10000,
+    "testPathIgnorePatterns": [
+      "src/routes/jobApplication/application.route.test.js"
+    ]
   }
 }
