@@ -19,7 +19,7 @@ describe('Application Routes', () => {
     // let jobId0;
     let jobId;
     let resumePath = 'src/routes/jobApplication/resume.test.pdf'
-    let fakeJobId = new mongoose.Types.ObjectId();
+    // let fakeJobId = new mongoose.Types.ObjectId();
 
 
     beforeAll(async () => {
