@@ -116,50 +116,50 @@ describe('Application Routes', () => {
 
     });
 
-    // describe('GET /applications', () => {
-    //     test('should return all applications for an admin', async () => {
-    //         const agent = await request.agent(app);
-    //         await agent
-    //             .post('/api/auth/signup')
-    //             .send(admin)
-    //             .expect(201);
-    //         adminAgent = agent;
+    describe('GET /applications', () => {
+        test('should return all applications for an admin', async () => {
+            const agent = await request.agent(app);
+            await agent
+                .post('/api/auth/signup')
+                .send(admin)
+                .expect(201);
+            adminAgent = agent;
 
-    //         const response = await agent
-    //             .get('/api/applications')
-    //         expect(response.status).toBe(200);
-    //         expect(response.body.length).toBeGreaterThan(0);
-    //     });
+            const response = await agent
+                .get('/api/applications')
+            expect(response.status).toBe(200);
+            expect(response.body.length).toBeGreaterThan(0);
+        });
 
-    //     test('should return applications for an employer', async () => {
+        test('should return applications for an employer', async () => {
 
-    //         const response = await employerAgent
-    //             .get('/api/applications')
-    //         expect(response.status).toBe(200);
-    //         expect(response.body.length).toBeGreaterThan(0);
-    //     });
-    // });
+            const response = await employerAgent
+                .get('/api/applications')
+            expect(response.status).toBe(200);
+            expect(response.body.length).toBeGreaterThan(0);
+        });
+    });
 
-    // describe('GET /applications/:id', () => {
-    //     test('should return an application for an admin', async () => {
-    //         const response = await adminAgent
-    //             .get(`/api/applications/${applicationId}`)
-    //         expect(response.status).toBe(200);
-    //         expect(response.body._id).toBe(applicationId);
-    //     });
+    describe('GET /applications/:id', () => {
+        test('should return an application for an admin', async () => {
+            const response = await adminAgent
+                .get(`/api/applications/${applicationId}`)
+            expect(response.status).toBe(200);
+            expect(response.body._id).toBe(applicationId);
+        });
 
-    //     test('should return an application for an employer', async () => {
-    //         const response = await employerAgent
-    //             .get(`/api/applications/${applicationId}`)
-    //         expect(response.status).toBe(200);
-    //         expect(response.body._id).toBe(applicationId);
-    //     });
+        test('should return an application for an employer', async () => {
+            const response = await employerAgent
+                .get(`/api/applications/${applicationId}`)
+            expect(response.status).toBe(200);
+            expect(response.body._id).toBe(applicationId);
+        });
 
-    //     test('should return an error when getting a non-existent application', async () => {
-    //         const response = await employerAgent
-    //             .get(`/api/applications/${fakeJobId}`)
-    //         expect(response.status).toBe(404);
-    //         expect(response.body.error).toBe('Application not found');
-    //     });
-    // });
+        test('should return an error when getting a non-existent application', async () => {
+            const response = await employerAgent
+                .get(`/api/applications/${fakeJobId}`)
+            expect(response.status).toBe(404);
+            expect(response.body.error).toBe('Application not found');
+        });
+    });
 });
