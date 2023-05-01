@@ -134,6 +134,7 @@ describe('Application Routes', () => {
                 .post('/api/auth/signup')
                 .send(admin)
                 .expect(201);
+            adminAgent = agent;
             
             const response = await agent
                 .get('/api/applications')
@@ -150,22 +151,20 @@ describe('Application Routes', () => {
         });
     });
 
-    // describe('GET /applications/:id', () => {
-    //     it('should return an application for an admin', async () => {
-    //         const response = await request(app)
-    //             .get(`/applications/${applicationId}`)
-    //             .set('Authorization', `Bearer ${token}`);
-    //         expect(response.status).toBe(200);
-    //         expect(response.body._id).toBe(applicationId);
-    //     });
+    describe('GET /applications/:id', () => {
+        it('should return an application for an admin', async () => {
+            const response = await adminAgent
+                .get(`/api/applications/${applicationId}`)
+            expect(response.status).toBe(200);
+            expect(response.body._id).toBe(applicationId);
+        });
 
-    //     it('should return an application for an employer', async () => {
-    //         const response = await request(app)
-    //             .get(`/applications/${applicationId}`)
-    //             .set('Authorization', `Bearer ${token}`);
-    //         expect(response.status).toBe(200);
-    //         expect(response.body._id).toBe(applicationId);
-    //     });
+        // it('should return an application for an employer', async () => {
+        //     const response = await employerAgent
+        //         .get(`/api/applications/${applicationId}`)
+        //     expect(response.status).toBe(200);
+        //     expect(response.body._id).toBe(applicationId);
+        // });
 
     //     it('should return an error when getting a non-existent application', async () => {
     //         const response = await request(app)
@@ -174,5 +173,5 @@ describe('Application Routes', () => {
     //         expect(response.status).toBe(404);
     //         expect(response.body.error).toBe('Application not found');
     //     });
-    // });
+    });
 });
