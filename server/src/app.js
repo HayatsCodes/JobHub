@@ -13,7 +13,20 @@ const userRouter = require('./routes/user/user.route');
 const jobsRouter = require('./routes/jobs/jobs.route');
 const applicationRouter = require('./routes/jobApplication/application.route');
 
-const redisClient = createClient();
+let redisClient;
+
+if (process.env.NODE_ENV === 'production') {
+    // Create a Redis client with the production redis url
+    redisClient = createClient({
+        url: `${process.env.REDIS_URL}`
+    });
+    
+} else {
+    // Create a Redis client with the default port
+    redisClient = createClient();
+}
+
+
 redisClient.connect().catch(console.error);
 const app = express();
 
