@@ -1,9 +1,10 @@
 # JobHub
-A Job Board Web Application that allows users to browse and apply to job listings.
+A Job Board Web API that allows users to browse and apply to job listings.
 
-## API Endpoints Documentation
+## API Documentation
 
-### Authentication Endpoints (/api/auth)
+### Authentication Endpoint (/api/auth)
+
 #### Sign Up (User Registration)
 Registers a new user.
 
@@ -48,4 +49,21 @@ Authenticates a user and signs them into the application.
   - Response Body: ` {error: "Incorrect email or password"}`
   - Status Code: 500 Internal Server Error
   - Response Body: JSON object with an error message
-    - error (string): "An error occurred during authentication" or "An error occurred while logging in"
+    - `{ error: "An error occurred during authentication" }`
+    - `{ error: "An error occurred while logging in" }`
+
+#### Sign Out (User Logout)
+Signs the user out of the application.
+- Endpoint: POST /api/auth/signout
+- Authentication Required: Yes
+- Request Headers:
+  - Cookie: Session cookie containing the user's authentication session
+- Success Response:
+  - Status Code: 200 OK
+  - Response Body: `{ message: "Signout successful" }`
+- Error Response:
+  - Status Code: 401 Unauthorized
+Response Body: `{ error: "Authentication error" }`
+
+
+
