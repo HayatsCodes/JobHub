@@ -4,7 +4,7 @@ A Job Board Web Application that allows users to browse and apply to job listing
 ## Documentation
 
 ### Authentication
-#### Register User
+#### Sign Up (User Registration)
 Registers a new user.
 
 - Endpoint: POST /api/auth/signup
