@@ -11,7 +11,7 @@ Registers a new user.
 - Authentication Required: No
 - Request Body: JSON object representing the user details
 - Success Response:
-- Status Code: 201 Created
+  - Status Code: 201 Created
 - Response Body: JSON object representing the registered user
 - Error Response:
   - Status Code: 400 Bad Request
