@@ -18,12 +18,19 @@ Registers a new user.
   - admin_key (string): Admin's Key
 - Success Response:
   - Status Code: 201 Created
-  - Response Body: JSON object representing the registered user
+  - Response Body: `{ message: "Registration sucessful" }`
 - Error Response:
   - Status Code: 400 Bad Request
-  - Response Body: `{ error: 'Invalid user' }`
+  - Response Body: JSON object with an error message
+    - `{ error: "Please enter all the details" }`
+    - `{ error: "Please enter a valid email" }`
+    - `{ error: "Password must be at least 8 characters long" }`
+    - `{ error: "Please enter a valid role" }`
+    - `{ error: "Invalid Admin key" }`
+  - Status Code: 409 Conflict
+  - Response Body: `{ error: "User already exist with the given email" }`
   - Status Code: 500 Internal Server Error
-  - Response Body: `{ error: 'Encountered an error' }`
+  - Response Body: `{ error: "Encountered an error" }`
 
 #### Sign In (User Login)
 Authenticates a user and signs them into the application.
@@ -35,12 +42,10 @@ Authenticates a user and signs them into the application.
   - password (string): User's password
 - Success Response:
   - Status Code: 200 OK
-  - Response Body: JSON object with a success message
-    - message (string): "Signin successful"
+  - Response Body: `{ message: "Signin successful" }`
 - Error Response:
   - Status Code: 401 Unauthorized
-  - Response Body: JSON object with an error message
-    - error (string): Error message indicating the reason for authentication failure
+  - Response Body: ` {error: "Incorrect email or password"}`
   - Status Code: 500 Internal Server Error
   - Response Body: JSON object with an error message
     - error (string): "An error occurred during authentication" or "An error occurred while logging in"
