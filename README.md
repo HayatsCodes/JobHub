@@ -7,10 +7,10 @@ A Job Board Web Application that allows users to browse and apply to job listing
 #### Register User
 Registers a new user.
 
-Endpoint: POST /api/auth/signup
-Authentication Required: No
-Request Body: JSON object representing the user details
-Success Response:
+- Endpoint: POST /api/auth/signup
+- Authentication Required: No
+- Request Body: JSON object representing the user details
+- Success Response:
 Status Code: 201 Created
 Response Body: JSON object representing the registered user
 Error Response:
