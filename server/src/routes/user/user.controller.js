@@ -63,11 +63,33 @@ async function registerUser(req, res) {
         });
     } catch (err) {
         console.log(err.stack);
-        return res.status(400).json('Something went wrong');
+        return res.status(500).json('Encountered an error');
     }
 }
 
-module.exports = registerUser;
+async function loginUser(req, res, next) {
+    passport.authenticate('local', (err, user, info) => {
+        if (err) { 
+          console.error(err);
+          return res.status(500).json({ error: "An error occurred during authentication" });
+        }
+        if (!user) { 
+          return res.status(401).json(info);
+        }
+        req.logIn(user, (err) => {
+          if (err) { 
+            console.error(err);
+            return res.status(500).json({ message: "An error occurred while logging in" });
+          }
+          return res.status(200).json({ message: "Signin successful" });
+        });
+      })(req, res, next);
+}
+
+module.exports = {
+    registerUser,
+    loginUser,
+}
 
 
 
