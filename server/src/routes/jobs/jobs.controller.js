@@ -55,7 +55,7 @@ async function getEmployerJobs(req, res) {
         }
 
     } catch (err) {
-        return res.status(400).json({ error: 'Invalid request' });
+        return res.status(500).json({ error: 'Encountered an error' });
     }
 }
 
@@ -74,7 +74,7 @@ async function getEmployerJob(req, res) {
 
     } catch (err) {
         console.log(err.stack);
-        return res.status(400).json({ error: 'Invalid request' });
+        return res.status(500).json({ error: 'Encountered an error' });
     }
 }
 
@@ -101,7 +101,7 @@ async function updateJob(req, res) {
 
     } catch (err) {
         console.log(err.stack);
-        return res.status(400).json({ error: 'Invalid request' });
+        return res.status(500).json({ error: 'Encountered an error' });
     }
 }
 
@@ -129,7 +129,7 @@ async function deleteJob(req, res) {
 
     } catch (err) {
         console.log(err.stack);
-        return res.status(400).json({ error: 'Invalid request' });
+        return res.status(500).json({ error: 'Encountered an error' });
     }
 }
 
