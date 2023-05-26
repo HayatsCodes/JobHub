@@ -441,9 +441,5 @@ describe('jobRoute', () => {
 
                 expect(res.body.error).toBe('Job not found');
         });
-
-
-        
-
     })
 })

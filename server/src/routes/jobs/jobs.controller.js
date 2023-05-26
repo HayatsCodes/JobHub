@@ -20,7 +20,7 @@ async function getJobs(req, res) {
         res.status(200).json(jobs);
     } catch (err) {
         console.log(err.stack)
-        return res.status(400).json({ error: 'Encountered an error' });
+        return res.status(500).json({ error: 'Encountered an error' });
     }
 }
 
@@ -34,7 +34,7 @@ async function getJob(req, res) {
         res.status(404).json({ error: 'Job not found' });
     } catch (err) {
         console.log(err.stack)
-        return res.status(404).json({ error: 'Job not found' });
+        return res.status(500).json({ error: 'Encountered an error' });
     }
 }
 
