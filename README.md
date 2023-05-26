@@ -162,7 +162,7 @@ Updates an existing job by ID.
 #### Delete Job
 Deletes an existing job by ID.
 
-- Endpoint: DELETE /api/jobs/:id
+- Endpoint: `DELETE /api/jobs/employer/:id`
 - Authentication Required: Yes
 - Authorization: ('admin' | 'employer') role
 - Success Response:
