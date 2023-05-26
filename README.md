@@ -87,7 +87,7 @@ Creates a new job.
 - Status Code: 400 Bad Request
 - Response Body: `{ error: 'Invalid job' }`
 
-### Get Jobs
+#### Get Jobs
 Retrieves a list of published jobs.
 
 - Endpoint: `GET /api/jobs`
@@ -97,13 +97,13 @@ Retrieves a list of published jobs.
   - Status Code: 200 OK
   - Response Body: JSON array containing the list of published jobs
 - Error Response:
-  - Status Code: 400 Bad Request
+  - Status Code: 500 Internal Server Error
   - Response Body: `{ error: 'Encountered an error' }`
 
-### Get Job
+#### Get Job
 Retrieves a single published job by ID.
 
-- Endpoint: GET /api/jobs/:id
+- Endpoint: `GET /api/jobs/:id`
 - Authentication Required: Yes
 - Authorization: ('admin' | 'user') role
 - Success Response:
@@ -111,6 +111,65 @@ Retrieves a single published job by ID.
   - Response Body: JSON object representing the published job
 - Error Response:
   - Status Code: 404 Not Found
-  - Response Body: { error: 'Job not found' }
+  - Response Body: `{ error: 'Job not found' }`
   - Status Code: 500 Internal Server Error
-  - Response Body: { error: 'Encountered an error' }
+  - Response Body: `{ error: 'Encountered an error' }`
+
+#### Get Employer Jobs
+Retrieves a list of jobs created by the authenticated employer or admin by Employer ID.
+
+- Endpoint: `GET /api/jobs/employer` or `GET /api/jobs/employer?employerId=id`
+- Authentication Required: Yes
+- Authorization: ('admin' | 'employer') role
+- Success Response:
+  - Status Code: 200 OK
+  - Response Body: JSON array containing the list of jobs created by the authenticated employer
+- Error Response:
+  - Status Code: 500 Internal Server Error
+  - Response Body: `{ error: 'Encountered an error' }`
+
+#### Get Employer Job
+Retrieves a single job created by the authenticated employer by ID.
+
+- Endpoint: `GET /api/jobs/employer/:id`
+- Authentication Required: Yes
+- Authorization: 'employer' role
+- Success Response:
+  - Status Code: 200 OK
+  - Response Body: JSON object representing the job created by the authenticated employer
+- Error Response:
+  - Status Code: 404 Not Found
+  - Response Body: `{ error: 'Job not found' }`
+  - Status Code: 500 Internal Server Error
+  - Response Body: `{ error: 'Encountered an error' }`
+
+#### Update Job
+Updates an existing job by ID.
+
+- Endpoint: `PATCH /api/jobs/employer/:id`
+- Authentication Required: Yes
+- Authorization: ('admin' | 'employer') role
+- Request Body: JSON object representing the updated job details
+- Success Response:
+  - Status Code: 200 OK
+  - Response Body: JSON object representing the updated job
+- Error Response:
+  - Status Code: 404 Not Found
+  - Response Body: `{ error: 'Job not found' }`
+- Status Code: 500 Internal Server Error
+- Response Body: `{ error: 'Encountered an error' }`
+
+#### Delete Job
+Deletes an existing job by ID.
+
+- Endpoint: DELETE /api/jobs/:id
+- Authentication Required: Yes
+- Authorization: ('admin' | 'employer') role
+- Success Response:
+  - Status Code: 200 OK
+  - Response Body: `{ message: 'Job deleted successfully' }`
+- Error Response:
+  - Status Code: 404 Not Found
+  - Response Body: `{ error: 'Job not found' }`
+  - Status Code: 500 Internal Server Error
+  - Response Body: `{ error: 'Encountered an error' }`
