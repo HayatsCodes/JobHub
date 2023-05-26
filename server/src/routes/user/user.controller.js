@@ -59,7 +59,7 @@ async function registerUser(req, res) {
         });
 
         req.login(user, () => {
-            return res.status(201).json({ message: "Registration sucessful" });
+            return res.status(201).json(user);
         });
     } catch (err) {
         console.log(err.stack);

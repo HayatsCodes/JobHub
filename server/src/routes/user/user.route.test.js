@@ -41,7 +41,6 @@ describe('userRoute', () => {
                 .expect('Content-Type', /json/)
                 .expect(201);
 
-            expect(res.body.message).toBe('Registration sucessful');
 
             const user = await userModel.findOne({ email: userData.email });
             expect(user).toBeDefined();
