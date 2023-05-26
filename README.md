@@ -19,7 +19,7 @@ Registers a new user.
   - admin_key (string): Admin's Key
 - Success Response:
   - Status Code: 201 Created
-  - Response Body: `{ message: "Registration sucessful" }`
+  - Response Body: JSON object representing the created user (including the user id)
 - Error Response:
   - Status Code: 400 Bad Request
   - Response Body: JSON object with an error message
@@ -68,6 +68,8 @@ Response Body: `{ error: "Authentication error" }`
 ### Jobs Endpoint (/api/jobs)
 
 #### Add Job
+Creates a new job.
+
 - Endpoint: `POST /api/jobs`
 - Authentication Required: Yes
 - Authorization: ('admin' | 'employer') role
@@ -83,6 +85,32 @@ Response Body: `{ error: "Authentication error" }`
   - Response Body: JSON object representing the created job
 - Error Response:
 - Status Code: 400 Bad Request
-- Response Body: { error: 'Invalid job' }
-- Status Code: 500 Internal Server Error
-- Response Body: { error: 'Encountered an error' }
+- Response Body: `{ error: 'Invalid job' }`
+
+### Get Jobs
+Retrieves a list of published jobs.
+
+- Endpoint: `GET /api/jobs`
+- Authentication Required: Yes
+- Authorization: ('admin' | 'user') role
+- Success Response:
+  - Status Code: 200 OK
+  - Response Body: JSON array containing the list of published jobs
+- Error Response:
+  - Status Code: 400 Bad Request
+  - Response Body: `{ error: 'Encountered an error' }`
+
+### Get Job
+Retrieves a single published job by ID.
+
+- Endpoint: GET /api/jobs/:id
+- Authentication Required: Yes
+- Authorization: ('admin' | 'user') role
+- Success Response:
+  - Status Code: 200 OK
+  - Response Body: JSON object representing the published job
+- Error Response:
+  - Status Code: 404 Not Found
+  - Response Body: { error: 'Job not found' }
+  - Status Code: 500 Internal Server Error
+  - Response Body: { error: 'Encountered an error' }
