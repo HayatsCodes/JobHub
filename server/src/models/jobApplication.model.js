@@ -9,7 +9,8 @@ const applicationSchema = new mongoose.Schema({
     employer: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
-    }, 
+        required: true,
+    },
     user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
@@ -20,10 +21,12 @@ const applicationSchema = new mongoose.Schema({
         enum: ['pending', 'accepted', 'rejected'],
         default: 'pending',
     },
-    resume: {
-        name: String,
-        data: Buffer,
-        contentType: String,
+    resumeLink: {
+            type: String,
+            required: true,
+    },
+    coverLetter: {
+            type: String,
     },
     links: {
         type: [String],
