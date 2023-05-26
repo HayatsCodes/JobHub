@@ -185,8 +185,8 @@ Creates a new job application.
 - Request Body: JSON object representing the job details
   - jobId (ID: string): ID of the job to which the application is being made
   - status ('pending' [default] | 'accepted' | 'rejected'): The status of the job application
-  - resume (string): The link to the user's resume/cv
-  - coverLetter (string [optional]): The link to the user's cover letter
+  - resumeLink (string): The link to the user's resume/cv
+  - coverLetter (string [optional]):The user's cover letter in strings.
   - links ([string]): An array of relevant social links of the user
 - Success Response:
   - Status Code: 201 Created

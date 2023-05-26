@@ -21,7 +21,7 @@ const applicationSchema = new mongoose.Schema({
         enum: ['pending', 'accepted', 'rejected'],
         default: 'pending',
     },
-    resume: {
+    resumeLink: {
             type: String,
             required: true,
     },
