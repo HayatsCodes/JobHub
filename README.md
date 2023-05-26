@@ -19,7 +19,7 @@ Registers a new user.
   - admin_key (string): Admin's Key
 - Success Response:
   - Status Code: 201 Created
-  - Response Body: JSON object representing the created user (including the user id)
+  - Response Body: JSON object representing the created user (including the User ID)
 - Error Response:
   - Status Code: 400 Bad Request
   - Response Body: JSON object with an error message
@@ -173,3 +173,58 @@ Deletes an existing job by ID.
   - Response Body: `{ error: 'Job not found' }`
   - Status Code: 500 Internal Server Error
   - Response Body: `{ error: 'Encountered an error' }`
+
+### Applications Endpoint (/api/applications)
+
+#### Add Application
+Creates a new job application.
+
+- Endpoint: `POST /api/applications`
+- Authentication Required: Yes
+- Authorization: 'user' role
+- Request Body: JSON object representing the job details
+  - jobId (ID: string): ID of the job to which the application is being made
+  - status ('pending' [default] | 'accepted' | 'rejected'): The status of the job application
+  - resume (string): The link to the user's resume/cv
+  - coverLetter (string [optional]): The link to the user's cover letter
+  - links ([string]): An array of relevant social links of the user
+- Success Response:
+  - Status Code: 201 Created
+  - Response Body: JSON object representing the created application
+- Error Response:
+  - Status Code: 400 Bad Request
+  - Response Body: `{ error: 'Cannot create application' }`
+  - Status Code: 500 Internal Server Error
+  - Response Body: `{ error: 'Internal server error' }`
+
+#### Get Applications
+Retrieves a list of applications.
+
+- Endpoint: `GET /api/applications`
+- Authentication Required: Yes
+- Authorization: ('admin' | 'employer') role
+  - admin: Retrieves all applications
+  - employer: Retrieves job applications posted by the employer
+- Success Response:
+- Status Code: 200 OK
+  - Response Body: JSON array containing the list of applications
+- Error Response:
+  - Status Code: 500 Internal Server Error
+  - Response Body: { error: 'Encountered an error' }
+
+#### Get Application
+Retrieves a single application by ID.
+
+- Endpoint: `GET /api/applications/:id`
+- Authentication Required: Yes
+- Authorization: ('admin' | 'employer') role
+  - admin: Retrieves any application by ID
+  - employer: Retrieves application posted by the employer by ID
+- Success Response:
+  - Status Code: 200 OK
+  - Response Body: JSON object representing the application
+- Error Response:
+  - Status Code: 404 Not Found
+  - Response Body: { error: 'Application not found' }
+  - Status Code: 500 Internal Server Error
+  - Response Body: { error: 'Encountered an error' }
