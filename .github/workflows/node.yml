@@ -26,7 +26,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-      - name: Install server dependencies
-        run: npm install --prefix server
+      - name: Install dependencies
+        run: npm install
       - name: Test server
-        run: npm test --prefix server
+        run: npm test
