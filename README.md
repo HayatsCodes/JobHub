@@ -3,6 +3,9 @@ A Job Board Web API that allows users to browse and apply to job listings.
 
 ## API Documentation
 
+## Base URL
+https://jobhub-production-c61e.up.railway.app - Does not accept requests
+
 ### Authentication Endpoint (/api/auth)
 
 #### Sign Up (User Registration)
