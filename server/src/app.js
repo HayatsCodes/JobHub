@@ -18,8 +18,12 @@ let redisClient;
 if (process.env.NODE_ENV === 'production') {
     // Create a Redis client with the production redis url
     redisClient = createClient({
-        url: `${process.env.REDIS_URL}`
-    });
+      password: process.env.REDIS_PASSWORD,
+      socket: {
+          host: process.env.REDIS_URL,
+          port: process.env.REDIS_PORT
+      }
+  });
     
 } else {
     // Create a Redis client with the default port
