@@ -34,9 +34,9 @@ if (process.env.NODE_ENV === 'production') {
 redisClient.connect().catch(console.error);
 const app = express();
 
-// app.use(cors({
-//   origin: '*'
-// }));
+app.use(cors({
+  origin: '*'
+}));
 app.use(helmet())
 app.use(express.json());
 app.use(session({
